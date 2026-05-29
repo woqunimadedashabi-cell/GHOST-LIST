@@ -16,7 +16,7 @@
             --bg-surface: #15151a;
             --bg-input: #22222a;
             --primary-neon: #8E44AD; 
-            --accent-orange: #ff6b35; /* 促销专用的警示橙 */
+            --accent-orange: #ff6b35; 
             --text-main: #ffffff;
             --text-muted: #aaaaaa;
             --font-main: 'Inter', sans-serif;
@@ -25,7 +25,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); scroll-behavior: smooth; }
 
-        html { scroll-padding-top: 100px; } /* 防止导航栏遮挡锚点内容 */
+        html { scroll-padding-top: 100px; } 
 
         /* 恢复极简纯黑背景 */
         body { 
@@ -156,14 +156,12 @@
         .co-summary { background: var(--bg-input); padding: 25px; border-radius: 12px; margin-bottom: 30px; font-size: 1.5rem; font-weight: 900; }
         .co-summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
         
-        /* [修复重点 1] 强制 TOTAL DUE 同行显示并垂直对齐 */
         .co-summary-total { 
             font-size: 2rem; color: var(--primary-neon); border-top: 2px solid #444; 
             padding-top: 15px; margin-top: 15px; 
             display: flex; justify-content: space-between; align-items: center; 
             white-space: nowrap; 
         }
-        /* [修复重点 2] 强制按钮文字不换行并居中对齐 */
         .btn-submit-order { 
             width: 100%; padding: 20px; background: #fff; color: #000; border: none; border-radius: 12px; 
             font-size: 1.6rem; font-weight: 900; text-transform: uppercase; cursor: pointer; 
@@ -198,7 +196,6 @@
             .logo-text { font-size: 1.8rem; }
             .cart-btn { padding: 8px 15px; font-size: 1rem; }
 
-            /* [修复重点 3] 手机端专属减小字号，坚决杜绝折行 */
             .co-summary-total { font-size: 1.6rem; }
             .btn-submit-order { font-size: 1.3rem; padding: 18px; }
         }
@@ -404,7 +401,6 @@
             let selectedOption = selectElem.options[selectElem.selectedIndex];
             
             let price = parseInt(selectedOption.value);
-            // 优先使用绑定的 data-weight 提取规格，若没有则兼容旧方法
             let weightText = selectedOption.dataset.weight || selectedOption.text.split(' - ')[0]; 
             
             let finalName = baseName + ' (' + weightText + ')';
@@ -458,7 +454,6 @@
             document.getElementById('cart-items').innerHTML = html;
             document.getElementById('cart-sub').innerText = `$${subtotal}`;
             
-            // [修复重点 4] 取消免运费逻辑，直接 $50 运费，并强制补全 $ 符号
             let shipping = subtotal > 0 ? 50 : 0; 
             document.getElementById('sum-sub').innerText = `$${subtotal}`;
             document.getElementById('sum-ship').innerText = subtotal > 0 ? `$${shipping}` : '$0';
@@ -488,7 +483,7 @@
             payMethod = method;
         }
 
-        // [修复重点 5] Telegram 机器人提交订单逻辑
+        // [透传报错版] 提交订单逻辑
         function submitOrder() {
             let submitBtn = document.querySelector('.btn-submit-order');
             submitBtn.innerText = 'PROCESSING...';
@@ -524,8 +519,8 @@
             orderMsg += `💰 <b>TOTAL DUE:</b> $${totalDue}\n`;
 
             // Telegram API 配置
-            const botToken = "8979648293:AAH4pl4Chj_GNoHUlULSIBVn9poI63xSR_0";
-            const chatId = "-5156832658";
+            const botToken = "8979648293:AAH60zR9Y4D-yPbCAJHOerp_1RjGJTVp-Ac";
+            const chatId = "-1003838040554";
             const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
             // 推送数据到 Telegram
@@ -547,11 +542,12 @@
                     cartData = []; // 清空购物车
                     updateUI();
                 } else {
-                    alert("System error. Please try again.");
+                    // 【核心修改】：显示 Telegram 的真实错误原因！
+                    alert("Telegram Error: " + data.description);
                 }
             })
             .catch(error => {
-                alert("Network issue. Please check your connection.");
+                alert("Network issue: " + error.message);
             })
             .finally(() => {
                 submitBtn.innerText = 'SEND TO SALES NOW';
