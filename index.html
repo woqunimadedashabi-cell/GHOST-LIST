@@ -16,6 +16,7 @@
             --bg-surface: #15151a;
             --bg-input: #22222a;
             --primary-neon: #8E44AD; 
+            --accent-orange: #ff6b35; /* 促销专用的警示橙 */
             --text-main: #ffffff;
             --text-muted: #aaaaaa;
             --font-main: 'Inter', sans-serif;
@@ -24,7 +25,12 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); scroll-behavior: smooth; }
 
-        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.5; }
+        /* 恢复极简纯黑背景 */
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            line-height: 1.5; 
+        }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
@@ -40,26 +46,36 @@
         .ticker-item { padding: 0 3rem; display: inline-block; }
         @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
-        /* ================= 导航条 (极简) ================= */
+        /* ================= 导航条 (重新设计的自适应排版) ================= */
         header {
             position: sticky; top: 0; z-index: 100;
             background: rgba(10, 10, 12, 0.95);
             border-bottom: 2px solid var(--primary-neon);
-            display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; backdrop-filter: blur(10px);
         }
-        .logo-text { font-family: var(--font-logo); font-size: 2.2rem; color: #fff; text-decoration: none; text-shadow: 0 0 15px var(--primary-neon); }
         
-        .header-actions { display: flex; align-items: center; gap: 20px; }
-        .nav-link { color: #fff; text-decoration: none; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; display: none; }
-        @media(min-width: 768px) { .nav-link { display: block; } }
-
-        .cart-btn { 
-            background: var(--primary-neon); color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
-            font-size: 1.2rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; gap: 10px;
-        }
+        .logo-text { order: 1; font-family: var(--font-logo); font-size: 2.2rem; color: #fff; text-decoration: none; text-shadow: 0 0 15px var(--primary-neon); }
+        .cart-btn { order: 2; background: var(--primary-neon); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1.2rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .cart-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 20px; font-size: 1rem; }
+        
+        .nav-links { 
+            order: 3; width: 100%; display: flex; gap: 20px; margin-top: 15px; 
+            justify-content: flex-start; /* 手机端靠左对齐，跟在Logo下面 */
+        }
+        .nav-link { color: #fff; text-decoration: none; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; transition: color 0.2s; }
+        .nav-link:hover { color: var(--primary-neon); }
 
-        /* ================= 英雄区域 (直奔主题) ================= */
+        @media (min-width: 768px) {
+            header { flex-wrap: nowrap; }
+            .nav-links {
+                order: 2; width: auto; margin-top: 0; margin-left: auto; margin-right: 30px; 
+                justify-content: flex-end; /* PC端推到右边购物车旁边 */
+            }
+            .cart-btn { order: 3; }
+        }
+
+        /* ================= 英雄区域 ================= */
         .hero { 
             padding: 80px 5%; text-align: center; 
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=1920&auto=format&fit=crop') center/cover;
@@ -67,27 +83,22 @@
         .hero h1 { font-family: var(--font-logo); font-size: clamp(3.5rem, 8vw, 6rem); text-transform: uppercase; line-height: 1; margin-bottom: 15px; }
         .hero p { font-size: 1.5rem; font-weight: 700; color: #ddd; text-transform: uppercase; }
 
-        /* ================= 模块 1: Menu (巨大化产品卡片 & 下拉菜单) ================= */
+        /* ================= 产品卡片与布局通用 ================= */
         .container { max-width: 1300px; margin: 0 auto; padding: 60px 5%; }
         .section-title { font-size: 3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 40px; text-align: center; color: var(--primary-neon); }
-        
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .p-card { background: var(--bg-surface); border: 2px solid #333; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+        .p-card { background: var(--bg-surface); border: 2px solid #333; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
         .p-img { width: 100%; height: 280px; object-fit: cover; border-bottom: 2px solid #333; }
         .p-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
-        
         .p-cat { font-size: 1rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
         .p-title { font-size: 1.8rem; font-weight: 900; color: #fff; margin-bottom: 15px; line-height: 1.2; }
         
-        /* 简单粗暴的重量选择器 */
         .weight-select { 
             width: 100%; padding: 15px; margin-bottom: 15px; background: #000; color: #fff;
             border: 2px solid #444; border-radius: 8px; font-size: 1.3rem; font-weight: 900;
             outline: none; cursor: pointer; text-transform: uppercase; 
         }
         .weight-select:focus { border-color: var(--primary-neon); }
-        
-        /* 简化版的全磅联系销售提示 */
         .pound-note { text-align: center; font-size: 1rem; font-weight: 900; color: var(--text-muted); margin-bottom: 15px; letter-spacing: 1px; }
 
         .btn-add { 
@@ -114,21 +125,17 @@
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; display: none; }
         .cart-drawer { position: fixed; top: 0; right: -500px; width: 100%; max-width: 450px; height: 100vh; background: var(--bg-main); border-left: 2px solid var(--primary-neon); z-index: 1000; transition: right 0.3s; display: flex; flex-direction: column; }
         .cart-drawer.active { right: 0; }
-        
         .cd-header { padding: 25px; border-bottom: 2px solid #333; display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface); }
         .cd-header h2 { font-size: 2rem; font-weight: 900; }
         .cd-close { font-size: 2.5rem; cursor: pointer; color: #fff; }
-        
         .cd-body { flex-grow: 1; padding: 20px; overflow-y: auto; }
         .cd-item { background: var(--bg-surface); padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #333; }
         .cd-item-name { font-size: 1.1rem; font-weight: 900; line-height: 1.3; }
         .cd-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
         .cd-price { font-size: 1.5rem; font-weight: 900; color: var(--primary-neon); }
-        
         .cd-qty-ctrl { display: flex; align-items: center; gap: 15px; background: var(--bg-input); padding: 5px 15px; border-radius: 8px; }
         .cd-qty-ctrl button { background: none; border: none; color: #fff; font-size: 1.5rem; font-weight: 900; cursor: pointer; }
         .cd-qty-ctrl span { font-size: 1.5rem; font-weight: 900; }
-        
         .cd-footer { padding: 25px; background: var(--bg-surface); border-top: 2px solid #333; }
         .cd-total { font-size: 1.8rem; font-weight: 900; display: flex; justify-content: space-between; margin-bottom: 20px; }
         .btn-checkout { width: 100%; padding: 20px; background: var(--primary-neon); color: #fff; border: none; border-radius: 12px; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
@@ -137,21 +144,16 @@
         .checkout-modal-wrapper { position: fixed; inset: 0; background: var(--bg-main); z-index: 2000; overflow-y: auto; display: none; padding: 20px; }
         .checkout-container { max-width: 800px; margin: 40px auto; background: var(--bg-surface); border: 2px solid #333; border-radius: 16px; padding: 40px 30px; position: relative; }
         .close-checkout-btn { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; color: var(--text-muted); cursor: pointer; }
-        
         .co-title { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; }
-        
         .form-label { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: block; color: var(--text-muted); }
         .form-input { width: 100%; background: var(--bg-input); border: 2px solid #444; padding: 20px; border-radius: 12px; color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; outline: none; }
         .form-input:focus { border-color: var(--primary-neon); }
-        
         .pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
         .pay-btn { background: var(--bg-input); border: 2px solid #444; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.5rem; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .pay-btn.selected { background: var(--primary-neon); border-color: var(--primary-neon); color: #fff; }
-
         .co-summary { background: var(--bg-input); padding: 25px; border-radius: 12px; margin-bottom: 30px; font-size: 1.5rem; font-weight: 900; }
         .co-summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
         .co-summary-total { font-size: 2.5rem; color: var(--primary-neon); border-top: 2px solid #444; padding-top: 15px; margin-top: 15px; }
-
         .btn-submit-order { width: 100%; padding: 25px; background: #fff; color: #000; border: none; border-radius: 12px; font-size: 2rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
 
         /* ================= 成功弹窗 ================= */
@@ -162,40 +164,21 @@
         .success-box p { font-size: 1.5rem; color: #ddd; margin-bottom: 30px; }
         .success-box button { padding: 20px 40px; font-size: 1.5rem; font-weight: 900; background: #fff; color: #000; border: none; border-radius: 12px; cursor: pointer; }
 
-        /* ================= 手机端终极紧凑排版优化 (核心修改区) ================= */
+        /* ================= 手机端终极紧凑排版优化 ================= */
         @media (max-width: 768px) {
-            /* 1. 产品列表强制变两列，缩小间距 */
-            .product-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 10px; 
-            }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .container { padding: 30px 15px; }
             .section-title { font-size: 2rem; margin-bottom: 20px; }
             
-            /* 2. 压缩产品卡片内部空间 */
             .p-img { height: 130px; border-bottom: 1px solid #333; }
             .p-info { padding: 10px; }
-            
-            /* 3. 字体整体等比例缩小 */
             .p-cat { font-size: 0.65rem; margin-bottom: 2px; }
             .p-title { font-size: 1rem; margin-bottom: 8px; line-height: 1.1; }
             
-            /* 4. 压缩下拉框和按钮 */
-            .weight-select { 
-                padding: 6px 4px; 
-                font-size: 0.8rem; 
-                margin-bottom: 8px; 
-                border-radius: 6px;
-                border-width: 1px;
-            }
+            .weight-select { padding: 6px 4px; font-size: 0.8rem; margin-bottom: 8px; border-radius: 6px; border-width: 1px; }
             .pound-note { font-size: 0.65rem; margin-bottom: 8px; line-height: 1.1; }
-            .btn-add { 
-                padding: 10px; 
-                font-size: 0.9rem; 
-                border-radius: 8px; 
-            }
+            .btn-add { padding: 10px; font-size: 0.9rem; border-radius: 8px; }
             
-            /* 压缩一些不必要的空间 */
             .hero { padding: 40px 5%; }
             .hero h1 { font-size: 2.5rem; }
             .logo-text { font-size: 1.8rem; }
@@ -205,7 +188,7 @@
 </head>
 <body>
 
-    <!-- 模块：重新加回来的顶部公告栏 -->
+    <!-- 顶部跑马灯 -->
     <div class="announcement-bar">
         <div class="ticker-wrap">
             <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 8PM EST</div>
@@ -215,15 +198,16 @@
         </div>
     </div>
 
-    <!-- 顶部导航 -->
+    <!-- 顶部导航 (自适应版) -->
     <header>
         <a href="#" class="logo-text">GHOST LIST</a>
-        <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+            <i class="fa-solid fa-cart-shopping"></i> CART <span class="cart-badge" id="nav-count">0</span>
+        </button>
+        <div class="nav-links">
             <a href="#menu" class="nav-link">MENU</a>
             <a href="#videos" class="nav-link">TOUCHDOWNS</a>
-            <button class="cart-btn" onclick="openCart()">
-                <i class="fa-solid fa-cart-shopping"></i> CART <span class="cart-badge" id="nav-count">0</span>
-            </button>
+            <a href="#deals" class="nav-link" style="color: var(--accent-orange);">DEALS</a>
         </div>
     </header>
 
@@ -232,15 +216,50 @@
         <p>No games. Just gas.</p>
     </section>
 
-    <!-- 模块 1: Menu (25个大麻品种将通过底部JS自动渲染在这里) -->
-    <section id="menu" class="container">
-        <h2 class="section-title">THE MENU</h2>
-        <div class="product-grid" id="dynamic-menu">
-            <!-- JS 会自动把那25个产品填充到这里 -->
+    <!-- 模块 2: Deals (新增促销区域) -->
+    <section id="deals" class="container" style="padding-bottom: 0;">
+        <h2 class="section-title" style="color: var(--accent-orange);">DEALS</h2>
+        <div class="product-grid">
+            <!-- 促销套餐 1 -->
+            <div class="p-card" style="border-color: var(--accent-orange);">
+                <div style="position:absolute; background:var(--accent-orange); color:#fff; padding:5px 10px; font-weight:900; font-size:0.8rem; border-bottom-right-radius:12px; z-index:10;">BUNDLE - SAVE $50</div>
+                <img src="https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600" class="p-img" alt="Deal">
+                <div class="p-info">
+                    <span class="p-cat">Starter Pack</span>
+                    <h3 class="p-title">The Stash Box</h3>
+                    <select class="weight-select" id="sel_deal1" style="border-color:var(--accent-orange);">
+                        <option value="199">BUNDLE - $199</option>
+                    </select>
+                    <div class="pound-note" style="color:var(--accent-orange);">WAS $249</div>
+                    <button class="btn-add" style="background:var(--accent-orange); color:#fff;" onclick="addWithWeight('deal1', 'The Stash Box Bundle')">ADD TO BAG</button>
+                </div>
+            </div>
+            <!-- 促销套餐 2 -->
+            <div class="p-card" style="border-color: var(--accent-orange);">
+                <div style="position:absolute; background:var(--accent-orange); color:#fff; padding:5px 10px; font-weight:900; font-size:0.8rem; border-bottom-right-radius:12px; z-index:10;">LIMITED DROP</div>
+                <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600" class="p-img" alt="Deal">
+                <div class="p-info">
+                    <span class="p-cat">Edibles</span>
+                    <h3 class="p-title">Sleep Tight Squares</h3>
+                    <select class="weight-select" id="sel_deal2" style="border-color:var(--accent-orange);">
+                        <option value="18">10 PK - $18</option>
+                    </select>
+                    <div class="pound-note" style="color:var(--accent-orange);">WAS $25</div>
+                    <button class="btn-add" style="background:var(--accent-orange); color:#fff;" onclick="addWithWeight('deal2', 'Sleep Tight Squares')">ADD TO BAG</button>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- 模块 4: Videos -->
+    <!-- 模块 1: Menu (25个大麻品种将通过底部JS自动渲染) -->
+    <section id="menu" class="container">
+        <h2 class="section-title">THE MENU</h2>
+        <div class="product-grid" id="dynamic-menu">
+            <!-- JS 自动填充 -->
+        </div>
+    </section>
+
+    <!-- 模块 4: Touchdowns -->
     <section id="videos" class="container" style="padding-top: 0;">
         <h2 class="section-title">TOUCHDOWNS</h2>
         <div class="video-grid">
