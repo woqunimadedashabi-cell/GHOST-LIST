@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHOST LIST | Members Only</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= 核心变量与重置 ================= */
+        :root {
+            --bg-color: #0d0d0d;
+            --surface-color: #1a1a1a;
+            --primary-neon: #8E44AD; /* 霓虹紫 */
+            --primary-glow: rgba(142, 68, 173, 0.6);
+            --text-main: #ECF0F1; /* 幽灵白 */
+            --text-muted: #888888;
+            --font-body: 'Inter', sans-serif;
+            --font-grunge: 'Permanent Marker', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(142, 68, 173, 0.1) 0%, transparent 50%),
+                linear-gradient(to bottom, transparent, #0a0a0a);
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--surface-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-neon); }
+
+        /* ================= 导航栏 ================= */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: var(--font-grunge);
+            font-size: 2rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-glow);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-neon);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-icons i { cursor: pointer; transition: 0.3s; }
+        .nav-icons i:hover { color: var(--primary-neon); }
+
+        /* ================= Hero 区域 ================= */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 5%;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--font-grunge);
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(255,255,255,0.1);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        /* 霓虹按钮 */
+        .btn-neon {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: transparent;
+            color: #fff;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid var(--primary-neon);
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-neon:hover {
+            background: var(--primary-neon);
+            box-shadow: 0 0 30px var(--primary-glow), inset 0 0 20px var(--primary-glow);
+            text-shadow: 0 0 5px #fff;
+        }
+
+        /* ================= 分类卡片区域 (对应原图 Pick your poison) ================= */
+        .section-container {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary-neon);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .section-title::before, .section-title::after {
+            content: "";
+            height: 1px;
+            width: 40px;
+            background-color: var(--primary-neon);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background-color: var(--surface-color);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            cursor: pointer;
+        }
+
+        /* 模拟暗黑产品背景 */
+        .card-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, #0a0a0a);
+            z-index: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-neon);
+            box-shadow: 0 10px 30px rgba(142, 68, 173, 0.2);
+        }
+
+        .tag {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: rgba(142, 68, 173, 0.2);
+            border: 1px solid var(--primary-neon);
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        /* ================= 社群引流区域 (对应原图 Slide in the group chat) ================= */
+        .community-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .comm-card {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .comm-card:hover {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .comm-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .comm-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comm-stats {
+            color: var(--primary-neon);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-glow);
+            animation: pulse 1.5s infinite;
+        }
+
+        .comm-features {
+            list-style: none;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .comm-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comm-features i {
+            color: var(--primary-neon);
+            font-size: 0.8rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(142, 68, 173, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(142, 68, 173, 0); }
+        }
+
+        /* ================= 移动端适配 ================= */
+        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* 移动端暂时隐藏导航条，保留汉堡菜单图标 */
+            .mobile-menu-btn { display: block; }
+            .community-grid { grid-template-columns: 1fr; }
+            .comm-card { padding: 2rem; }
+            .comm-card h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">GHOST</div>
+        <ul class="nav-links">
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Exclusive Drops</a></li>
+            <li><a href="#">The Myth</a></li>
+        </ul>
+        <div class="nav-icons">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-user"></i>
+            <i class="fa-solid fa-lock" style="color: var(--primary-neon);"></i>
+            <i class="fa-solid fa-bars mobile-menu-btn"></i>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>THE INVISIBLE<br>LIST</h1>
+        <p>A curated selection. A moment in time. Access is earned, not given. Premium quality, strictly strictly confidential.</p>
+        <a href="#drops" class="btn-neon">Secure Your Access</a>
+    </section>
+
+    <section class="section-container" id="drops">
+        <div class="section-title"><i class="fa-solid fa-skull"></i> UNSEEN COLLECTIONS <i class="fa-solid fa-skull"></i></div>
+        <div class="category-grid">
+            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=800&auto=format&fit=crop') center/cover;">
+                <div class="tag"><i class="fa-solid fa-leaf"></i> FLOWER</div>
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3>Loud Buds.</h3>
+                    <p>Hand-trimmed eighths that smoke like a flex.</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=800&auto=format&fit=crop') center/cover;">
+                <div class="tag"><i class="fa-solid fa-cloud"></i> VAPE</div>
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3>Clean Clouds.</h3>
+                    <p>Live rosin, glass body, zero distillate.</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=800&auto=format&fit=crop') center/cover;">
+                <div class="tag"><i class="fa-solid fa-gem"></i> CONCENTRATES</div>
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3>Sticky Stuff.</h3>
+                    <p>Live rosin, hash rosin, badder, diamonds.</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=800&auto=format&fit=crop') center/cover;">
+                <div class="tag"><i class="fa-solid fa-candy-cane"></i> EDIBLES</div>
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3>Tasty Highs.</h3>
+                    <p>Gummies, chocolates, dosed clean.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container">
+         <div class="section-title"><i class="fa-solid fa-network-wired"></i> THE GHOST CHANNELS <i class="fa-solid fa-network-wired"></i></div>
+         <div class="community-grid">
+            <div class="comm-card">
+                <i class="fa-brands fa-telegram comm-icon"></i>
+                <h2>Ghost List on Telegram</h2>
+                <div class="comm-stats">
+                    <div class="pulse-dot"></div> 2,847 Initiates · Active right now
+                </div>
+                <ul class="comm-features">
+                    <li><i class="fa-solid fa-bolt"></i> Drop alerts 24hrs before they go live</li>
+                    <li><i class="fa-solid fa-key"></i> Member-only discount codes</li>
+                    <li><i class="fa-solid fa-gift"></i> Monthly free product giveaways</li>
+                </ul>
+                <a href="#" class="btn-neon" style="padding: 0.8rem 2rem; font-size: 0.9rem;">Join the Signal</a>
+            </div>
+
+            <div class="comm-card">
+                <i class="fa-brands fa-discord comm-icon"></i>
+                <h2>Ghost List on Discord</h2>
+                <div class="comm-stats">
+                    <div class="pulse-dot"></div> 4,102 Initiates · 38 Online
+                </div>
+                <ul class="comm-features">
+                    <li><i class="fa-solid fa-comments"></i> Strain reviews & growing talk</li>
+                    <li><i class="fa-solid fa-eye"></i> Early access to new drops</li>
+                    <li><i class="fa-solid fa-shield-halved"></i> Real community, no bots, no noise</li>
+                </ul>
+                <a href="#" class="btn-neon" style="padding: 0.8rem 2rem; font-size: 0.9rem;">Enter the Server</a>
+            </div>
+         </div>
+    </section>
+
+</body>
+</html>
