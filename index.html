@@ -27,16 +27,45 @@
 
         html { scroll-padding-top: 100px; } 
 
-        /* 恢复极简纯黑背景 */
         body { 
             background-color: var(--bg-main); 
             color: var(--text-main); 
             line-height: 1.5; 
         }
+        
+        body.no-scroll { overflow: hidden; }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 5px; }
+
+        /* ================= 合规年龄验证弹窗 (Age Gate) ================= */
+        .age-gate-wrapper {
+            position: fixed; inset: 0; background: var(--bg-main); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .age-gate-box {
+            background: var(--bg-surface); border: 2px solid var(--primary-neon);
+            padding: 50px 40px; border-radius: 16px; text-align: center; max-width: 500px; width: 100%;
+            box-shadow: 0 0 40px rgba(142, 68, 173, 0.4);
+        }
+        .age-gate-box i { font-size: 4rem; color: var(--primary-neon); margin-bottom: 20px; }
+        .age-gate-box h2 { font-family: var(--font-logo); font-size: 2.5rem; margin-bottom: 15px; letter-spacing: 2px; }
+        .age-gate-box p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; font-weight: 700; line-height: 1.6; }
+        .age-btn-group { display: flex; flex-direction: column; gap: 15px; }
+        
+        .btn-age-yes {
+            padding: 18px; background: var(--primary-neon); color: #fff; border: none;
+            border-radius: 12px; font-size: 1.2rem; font-weight: 900; cursor: pointer; text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-age-yes:hover { transform: scale(1.02); }
+        
+        .btn-age-no {
+            padding: 18px; background: transparent; color: var(--text-muted); border: 2px solid #444;
+            border-radius: 12px; font-size: 1.2rem; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.2s;
+        }
+        .btn-age-no:hover { border-color: #ff3333; color: #ff3333; }
 
         /* ================= 顶部滚动跑马灯公告 ================= */
         .announcement-bar {
@@ -109,20 +138,28 @@
         }
         .btn-add:active { transform: scale(0.98); background: var(--primary-neon); color: #fff; }
 
-        /* ================= 模块 4: Touchdowns ================= */
+        /* ================= 详情与点击交互样式 ================= */
+        .clickable { cursor: pointer; transition: transform 0.2s, opacity 0.2s; }
+        .clickable:hover { opacity: 0.8; }
+        .p-img.clickable:hover { transform: scale(1.03); }
+        .p-title.clickable:hover { color: var(--primary-neon); }
+        
+        #detail-modal .pound-note { margin-top: 15px; }
+        #detail-modal .btn-add { margin-top: 15px; }
+
+        /* ================= 视频 Touchdowns 样式 ================= */
         .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .vid-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; border: 2px solid #333; }
         .vid-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
         .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--primary-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #fff; }
 
-       /* ================= 模块 6: Contact ================= */
+       /* ================= 联系我们 Contact 样式 ================= */
         .contact-box { background: var(--bg-surface); border: 2px solid var(--primary-neon); padding: 40px; border-radius: 16px; text-align: center; }
         .contact-box h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
         .channel-links { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; }
-        /* 替换掉原来的 .btn-social，改成下面这样 */
         .btn-social { 
-            position: relative; /* 建立定位基准 */
-            display: block; /* 让文字完美居中 */
+            position: relative;
+            display: block;
             text-align: center; 
             padding: 20px; 
             border-radius: 12px; 
@@ -132,18 +169,16 @@
             text-decoration: none; 
             text-transform: uppercase; 
         }
-        
-        /* 新增这一段，专门把图标钉死在左侧 */
         .btn-social i {
             position: absolute;
-            left: 50px; /* 图标距离左边的固定距离 */
+            left: 50px;
             top: 50%;
-            transform: translateY(-50%); /* 确保图标绝对垂直居中 */
+            transform: translateY(-50%);
             font-size: 1.8rem;
         }
         .btn-tg { background: #0088cc; }
         .btn-tato { background: #e838cc; } 
-        .btn-signal { background: #3A76F0; } /* 👈 这是新加的 Signal 蓝色 */
+        .btn-signal { background: #3A76F0; } 
 
         /* ================= 右侧购物车抽屉 ================= */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; display: none; }
@@ -164,20 +199,22 @@
         .cd-total { font-size: 1.8rem; font-weight: 900; display: flex; justify-content: space-between; margin-bottom: 20px; }
         .btn-checkout { width: 100%; padding: 20px; background: var(--primary-neon); color: #fff; border: none; border-radius: 12px; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
 
-        /* ================= 隐藏的终极结算全屏弹窗 ================= */
-        .checkout-modal-wrapper { position: fixed; inset: 0; background: var(--bg-main); z-index: 2000; overflow-y: auto; display: none; padding: 20px; }
+        /* ================= 各类全屏弹窗 (结算、详情、视频) ================= */
+        .checkout-modal-wrapper { position: fixed; inset: 0; background: rgba(10,10,12,0.95); z-index: 2000; overflow-y: auto; display: none; padding: 20px; backdrop-filter: blur(5px); }
         .checkout-container { max-width: 800px; margin: 40px auto; background: var(--bg-surface); border: 2px solid #333; border-radius: 16px; padding: 40px 30px; position: relative; }
-        .close-checkout-btn { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; color: var(--text-muted); cursor: pointer; }
+        .close-checkout-btn { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+        .close-checkout-btn:hover { color: #fff; }
         .co-title { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; }
+        
         .form-label { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: block; color: var(--text-muted); }
         .form-input { width: 100%; background: var(--bg-input); border: 2px solid #444; padding: 20px; border-radius: 12px; color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; outline: none; }
         .form-input:focus { border-color: var(--primary-neon); }
         .pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
         .pay-btn { background: var(--bg-input); border: 2px solid #444; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.5rem; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .pay-btn.selected { background: var(--primary-neon); border-color: var(--primary-neon); color: #fff; }
+        
         .co-summary { background: var(--bg-input); padding: 25px; border-radius: 12px; margin-bottom: 30px; font-size: 1.5rem; font-weight: 900; }
         .co-summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        
         .co-summary-total { 
             font-size: 2rem; color: var(--primary-neon); border-top: 2px solid #444; 
             padding-top: 15px; margin-top: 15px; 
@@ -225,6 +262,18 @@
 </head>
 <body>
 
+    <div class="age-gate-wrapper" id="age-gate">
+        <div class="age-gate-box">
+            <i class="fa-solid fa-cannabis"></i>
+            <h2>AGE VERIFICATION</h2>
+            <p>Welcome to GHOST LIST. By entering this site, you confirm that you are 21 years of age or older, or a valid medical patient 18+.</p>
+            <div class="age-btn-group">
+                <button class="btn-age-yes" onclick="verifyAge(true)">YES, I AM 21+</button>
+                <button class="btn-age-no" onclick="verifyAge(false)">NO, I AM NOT</button>
+            </div>
+        </div>
+    </div>
+
     <div class="announcement-bar">
         <div class="ticker-wrap">
             <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 2PM EST</div>
@@ -253,49 +302,17 @@
 
     <section id="deals" class="container" style="padding-bottom: 0;">
         <h2 class="section-title" style="color: var(--accent-orange);">DEALS</h2>
-        <div class="product-grid">
-            <div class="p-card" style="border-color: var(--accent-orange);">
-                <div style="position:absolute; background:var(--accent-orange); color:#fff; padding:5px 10px; font-weight:900; font-size:0.8rem; border-bottom-right-radius:12px; z-index:10;">BUNDLE - SAVE $50</div>
-                <img src="https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600" class="p-img" alt="Deal">
-                <div class="p-info">
-                    <span class="p-cat">Starter Pack</span>
-                    <h3 class="p-title">The Stash Box</h3>
-                    <select class="weight-select" id="sel_deal1" style="border-color:var(--accent-orange);">
-                        <option value="199" data-weight="BUNDLE">BUNDLE - $199</option>
-                    </select>
-                    <div class="pound-note" style="color:var(--accent-orange);">WAS $249</div>
-                    <button class="btn-add" style="background:var(--accent-orange); color:#fff;" onclick="addWithWeight('deal1', 'The Stash Box Bundle')">ADD TO BAG</button>
-                </div>
-            </div>
-            <div class="p-card" style="border-color: var(--accent-orange);">
-                <div style="position:absolute; background:var(--accent-orange); color:#fff; padding:5px 10px; font-weight:900; font-size:0.8rem; border-bottom-right-radius:12px; z-index:10;">LIMITED DROP</div>
-                <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600" class="p-img" alt="Deal">
-                <div class="p-info">
-                    <span class="p-cat">Edibles</span>
-                    <h3 class="p-title">Sleep Tight Squares</h3>
-                    <select class="weight-select" id="sel_deal2" style="border-color:var(--accent-orange);">
-                        <option value="18" data-weight="10 PK">10 PK - $18</option>
-                    </select>
-                    <div class="pound-note" style="color:var(--accent-orange);">WAS $25</div>
-                    <button class="btn-add" style="background:var(--accent-orange); color:#fff;" onclick="addWithWeight('deal2', 'Sleep Tight Squares')">ADD TO BAG</button>
-                </div>
-            </div>
-        </div>
+        <div class="product-grid" id="dynamic-deals"></div>
     </section>
 
     <section id="menu" class="container">
         <h2 class="section-title">THE MENU</h2>
-        <div class="product-grid" id="dynamic-menu">
-            </div>
+        <div class="product-grid" id="dynamic-menu"></div>
     </section>
 
     <section id="videos" class="container" style="padding-top: 0;">
         <h2 class="section-title">TOUCHDOWNS</h2>
-        <div class="video-grid">
-            <div class="vid-card"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop" alt="Touchdown Video"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-            <div class="vid-card"><img src="https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=600&auto=format&fit=crop" alt="Touchdown Video"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-            <div class="vid-card"><img src="https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?q=80&w=600&auto=format&fit=crop" alt="Touchdown Video"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-        </div>
+        <div class="video-grid" id="dynamic-videos"></div>
     </section>
 
     <section id="contact" class="container" style="padding-top: 0;">
@@ -304,7 +321,6 @@
             <div class="channel-links">
                 <a href="#" class="btn-social btn-tg"><i class="fa-brands fa-telegram"></i> TELEGRAM</a>
                 <a href="#" class="btn-social btn-tato"><i class="fa-solid fa-comments"></i> TATO TALK</a>
-                <!-- 👇 这是新加的 Signal 按钮，自带官方图标 -->
                 <a href="#" class="btn-social btn-signal"><i class="fa-solid fa-comment"></i> SIGNAL</a>
             </div>
         </div>
@@ -355,6 +371,28 @@
         </div>
     </div>
 
+    <div class="checkout-modal-wrapper" id="detail-modal">
+        <div class="checkout-container" style="max-width: 600px; padding: 0; overflow: hidden;">
+            <i class="fa-solid fa-xmark close-checkout-btn" onclick="closeDetailModal()" style="color: #fff; z-index: 10; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; text-align: center; line-height: 40px; top: 15px; right: 15px;"></i>
+            <img id="detail-img" src="" style="width: 100%; height: 350px; object-fit: cover; border-bottom: 2px solid #333;">
+            <div style="padding: 30px;">
+                <span id="detail-cat" class="p-cat"></span>
+                <h2 id="detail-title" class="p-title" style="font-size: 2.5rem; margin-bottom: 10px;"></h2>
+                <p id="detail-desc" style="color: #ccc; font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;"></p>
+                <div id="detail-actions"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-modal-wrapper" id="video-modal">
+        <div class="checkout-container" style="max-width: 800px; padding: 10px; background: #000;">
+            <i class="fa-solid fa-xmark close-checkout-btn" onclick="closeVideoModal()" style="top: -40px; right: 0;"></i>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                <iframe id="detail-video-frame" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div class="success-modal" id="success-view">
         <div class="success-box">
             <i class="fa-solid fa-circle-check"></i>
@@ -365,65 +403,182 @@
     </div>
 
     <script>
-        const productsList = [
-            { id: "str1",  name: "Sunrise Stack", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 80, oneOz: 150, halfP: 700 },
-            { id: "str2",  name: "Lemon Cherry Gelato", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 },
-            { id: "str3",  name: "Gelato 41", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600", halfOz: 85, oneOz: 160, halfP: 750 },
-            { id: "str4",  name: "Blue Dream", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600", halfOz: 75, oneOz: 140, halfP: 650 },
-            { id: "str5",  name: "Wedding Cake", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 95, oneOz: 180, halfP: 850 },
-            { id: "str6",  name: "OG Kush", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 80, oneOz: 150, halfP: 700 },
-            { id: "str7",  name: "Gary Payton", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 100, oneOz: 190, halfP: 900 },
-            { id: "str8",  name: "Runtz", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600", halfOz: 110, oneOz: 200, halfP: 950 },
-            { id: "str9",  name: "Purple Punch", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600", halfOz: 85, oneOz: 160, halfP: 750 },
-            { id: "str10", name: "Sour Diesel", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 },
-            { id: "str11", name: "Mac 1", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 95, oneOz: 180, halfP: 850 },
-            { id: "str12", name: "White Widow", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 70, oneOz: 130, halfP: 600 },
-            { id: "str13", name: "Gorilla Glue #4", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600", halfOz: 85, oneOz: 160, halfP: 750 },
-            { id: "str14", name: "Tropicana Cookies", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600", halfOz: 100, oneOz: 190, halfP: 900 },
-            { id: "str15", name: "Ice Cream Cake", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 },
-            { id: "str16", name: "Slurricane", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 95, oneOz: 180, halfP: 850 },
-            { id: "str17", name: "Zkittlez", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 105, oneOz: 195, halfP: 920 },
-            { id: "str18", name: "Mimosa", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600", halfOz: 80, oneOz: 150, halfP: 700 },
-            { id: "str19", name: "Cherry Pie", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600", halfOz: 85, oneOz: 160, halfP: 750 },
-            { id: "str20", name: "Biscotti", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 110, oneOz: 200, halfP: 950 },
-            { id: "str21", name: "Animal Mints", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 100, oneOz: 190, halfP: 900 },
-            { id: "str22", name: "Jack Herer", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 75, oneOz: 140, halfP: 650 },
-            { id: "str23", name: "Afghan Kush", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600", halfOz: 80, oneOz: 150, halfP: 700 },
-            { id: "str24", name: "Granddaddy Purple", type: "Flower - Indica", img: "https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600", halfOz: 85, oneOz: 160, halfP: 750 },
-            { id: "str25", name: "Pineapple Express", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 }
-        ];
+        // ================= Age Gate 逻辑 =================
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('ghostListAgeVerified') === 'true') {
+                document.getElementById('age-gate').style.display = 'none';
+            } else {
+                document.body.classList.add('no-scroll');
+            }
+        });
 
-        const menuContainer = document.getElementById('dynamic-menu');
-        let menuHTML = '';
-        
-        productsList.forEach(p => {
-            menuHTML += `
-                <div class="p-card">
-                    <img src="${p.img}" class="p-img" alt="Flower">
+        function verifyAge(isAdult) {
+            if (isAdult) {
+                localStorage.setItem('ghostListAgeVerified', 'true');
+                document.getElementById('age-gate').style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            } else {
+                window.location.href = "https://www.google.com"; 
+            }
+        }
+
+        // ================= 网站数据配置中心 =================
+        const STORE_DATA = {
+            deals: [
+                { id: "deal1", name: "The Stash Box", type: "Starter Pack", badge: "BUNDLE - SAVE $50", img: "images/product(1).JPG", desc: "Our ultimate starter pack. Includes 1 Oz of premium hybrid flower, 2 prerolls, and a pack of edibles.", options: [ { value: 199, label: "BUNDLE", text: "BUNDLE - $199" } ], note: "WAS $249" },
+                { id: "deal2", name: "Sleep Tight Squares", type: "Edibles", badge: "LIMITED DROP", img: "images/product(2).JPG", desc: "Potent 50mg THC gummies infused with CBN for the deepest sleep.", options: [ { value: 18, label: "10 PK", text: "10 PK - $18" } ], note: "WAS $25" },
+                { id: "deal3", name: "Weekend Warrior Pack", type: "Combo", badge: "HOT DEAL", img: "images/product(3).JPG", desc: "Get ready for the weekend with this mix of uplifting Sativas and relaxing Indicas.", options: [ { value: 150, label: "PACK", text: "PACK - $150" } ], note: "WAS $180" },
+                { id: "deal4", name: "Ounce Special", type: "Flower", badge: "CLEARANCE", img: "images/product(4).JPG", desc: "Full ounce of our house blend. Incredible value for daily smokers.", options: [ { value: 100, label: "1 OZ", text: "1 OZ - $100" } ], note: "WAS $140" },
+                { id: "deal5", name: "Vape Pen Combo", type: "Vapes", badge: "2 FOR 1", img: "images/product(5).JPG", desc: "Two premium 1g live resin carts for the price of one.", options: [ { value: 60, label: "2 PK", text: "2 PK - $60" } ], note: "WAS $90" },
+                { id: "deal6", name: "Pre-roll Party Pack", type: "Pre-rolls", badge: "STAFF PICK", img: "images/product(6).JPG", desc: "10 perfectly rolled joints using strictly top-shelf flower.", options: [ { value: 50, label: "10 PK", text: "10 PK - $50" } ], note: "WAS $75" }
+            ],
+            menu: [
+                { id: "str1", name: "Sunrise Stack", type: "Flower - Sativa", img: "images/product(7).JPG", desc: "A crazy uplifting Sativa to start your day. Strong citrus notes.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str2", name: "Lemon Cherry Gelato", type: "Flower - Hybrid", img: "images/product(8).JPG", desc: "An exotic cross that tastes exactly like the name.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str3", name: "Gelato 41", type: "Flower - Indica", img: "images/product(9).JPG", desc: "Heavy hitter with sweet dessert-like aromas.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str4", name: "Blue Dream", type: "Flower - Sativa", img: "images/product(10).JPG", desc: "Legendary West Coast strain. Berry flavors and dreamy highs.", options: [ { value: 75, label: "HALF OZ", text: "HALF OZ - $75" }, { value: 140, label: "1 OZ", text: "1 OZ - $140" }, { value: 650, label: "HALF P", text: "HALF P - $650" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str5", name: "Wedding Cake", type: "Flower - Hybrid", img: "images/product(11).JPG", desc: "Rich and tangy with earthy pepper profiles.", options: [ { value: 95, label: "HALF OZ", text: "HALF OZ - $95" }, { value: 180, label: "1 OZ", text: "1 OZ - $180" }, { value: 850, label: "HALF P", text: "HALF P - $850" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str6", name: "OG Kush", type: "Flower - Indica", img: "images/product(12).JPG", desc: "The timeless classic. Earthy, pine, and diesel.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str7", name: "Gary Payton", type: "Flower - Hybrid", img: "images/product(13).JPG", desc: "Hard-hitting hybrid known for its potent effects.", options: [ { value: 100, label: "HALF OZ", text: "HALF OZ - $100" }, { value: 190, label: "1 OZ", text: "1 OZ - $190" }, { value: 900, label: "HALF P", text: "HALF P - $900" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str8", name: "Runtz", type: "Flower - Hybrid", img: "images/product(14).JPG", desc: "Incredibly fruity profile that smells just like a bag of candy.", options: [ { value: 110, label: "HALF OZ", text: "HALF OZ - $110" }, { value: 200, label: "1 OZ", text: "1 OZ - $200" }, { value: 950, label: "HALF P", text: "HALF P - $950" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str9", name: "Purple Punch", type: "Flower - Indica", img: "images/product(15).JPG", desc: "Sweet and sedating union of Larry OG and Granddaddy Purple.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str10", name: "Sour Diesel", type: "Flower - Sativa", img: "images/product(16).JPG", desc: "Fast-acting phenotype delivering energizing, dreamy cerebral effects.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str11", name: "Mac 1", type: "Flower - Hybrid", img: "images/product(17).JPG", desc: "Miracle Alien Cookies. Gorgeous buds and a balanced high.", options: [ { value: 95, label: "HALF OZ", text: "HALF OZ - $95" }, { value: 180, label: "1 OZ", text: "1 OZ - $180" }, { value: 850, label: "HALF P", text: "HALF P - $850" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str12", name: "White Widow", type: "Flower - Hybrid", img: "images/product(18).JPG", desc: "A global favorite famous for its heavy resin production.", options: [ { value: 70, label: "HALF OZ", text: "HALF OZ - $70" }, { value: 130, label: "1 OZ", text: "1 OZ - $130" }, { value: 600, label: "HALF P", text: "HALF P - $600" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str13", name: "Gorilla Glue #4", type: "Flower - Hybrid", img: "images/product(19).JPG", desc: "Potent and chunky, leaving you glued to the couch.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str14", name: "Tropicana Cookies", type: "Flower - Sativa", img: "images/product(20).JPG", desc: "Dark purple with bright citrus notes. Extremely uplifting.", options: [ { value: 100, label: "HALF OZ", text: "HALF OZ - $100" }, { value: 190, label: "1 OZ", text: "1 OZ - $190" }, { value: 900, label: "HALF P", text: "HALF P - $900" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str15", name: "Ice Cream Cake", type: "Flower - Indica", img: "images/product(21).JPG", desc: "Creamy flavor profile with sweet hints of vanilla and sugary dough.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str16", name: "Slurricane", type: "Flower - Indica", img: "images/product(22).JPG", desc: "Produces relaxing effects that come on slowly.", options: [ { value: 95, label: "HALF OZ", text: "HALF OZ - $95" }, { value: 180, label: "1 OZ", text: "1 OZ - $180" }, { value: 850, label: "HALF P", text: "HALF P - $850" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str17", name: "Zkittlez", type: "Flower - Indica", img: "images/product(23).JPG", desc: "Chunky colas that explode in a spectrum of light green hues.", options: [ { value: 105, label: "HALF OZ", text: "HALF OZ - $105" }, { value: 195, label: "1 OZ", text: "1 OZ - $195" }, { value: 920, label: "HALF P", text: "HALF P - $920" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str18", name: "Mimosa", type: "Flower - Sativa", img: "images/product(24).JPG", desc: "Happy, level-headed effects that will leave you feeling uplifted.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str19", name: "Cherry Pie", type: "Flower - Hybrid", img: "images/product(25).JPG", desc: "Smells of sweet and sour cherry pie. Fast acting.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str20", name: "Biscotti", type: "Flower - Indica", img: "images/product(26).JPG", desc: "Potent indica leaning hybrid with sweet, cookie, and gas flavors.", options: [ { value: 110, label: "HALF OZ", text: "HALF OZ - $110" }, { value: 200, label: "1 OZ", text: "1 OZ - $200" }, { value: 950, label: "HALF P", text: "HALF P - $950" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str21", name: "Animal Mints", type: "Flower - Hybrid", img: "images/product(27).JPG", desc: "Produces a strong body and head high, making it ideal for after work.", options: [ { value: 100, label: "HALF OZ", text: "HALF OZ - $100" }, { value: 190, label: "1 OZ", text: "1 OZ - $190" }, { value: 900, label: "HALF P", text: "HALF P - $900" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str22", name: "Jack Herer", type: "Flower - Sativa", img: "images/product(28).JPG", desc: "Renowned for its clear-headed, creative effects.", options: [ { value: 75, label: "HALF OZ", text: "HALF OZ - $75" }, { value: 140, label: "1 OZ", text: "1 OZ - $140" }, { value: 650, label: "HALF P", text: "HALF P - $650" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str23", name: "Afghan Kush", type: "Flower - Indica", img: "images/product(29).JPG", desc: "Pure indica with heavy sedative effects. Perfect for nighttime.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str24", name: "Granddaddy Purple", type: "Flower - Indica", img: "images/product(30).JPG", desc: "Famous for its deep purple bloom and potent psychoactive effects.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str25", name: "Pineapple Express", type: "Flower - Sativa", img: "images/product(31).JPG", desc: "Hard-hitting sativa blend with long-lasting energetic effects.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str26", name: "Girl Scout Cookies", type: "Flower - Hybrid", img: "images/product(32).JPG", desc: "Produces euphoric effects followed by waves of full-body relaxation.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str27", name: "Chemdawg", type: "Flower - Hybrid", img: "images/product(33).JPG", desc: "Known for its distinct, diesel-like aroma. Pungent and sharp.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str28", name: "Green Crack", type: "Flower - Sativa", img: "images/product(34).JPG", desc: "Invigorating mental buzz that keeps you going throughout the day.", options: [ { value: 75, label: "HALF OZ", text: "HALF OZ - $75" }, { value: 140, label: "1 OZ", text: "1 OZ - $140" }, { value: 650, label: "HALF P", text: "HALF P - $650" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str29", name: "Trainwreck", type: "Flower - Sativa", img: "images/product(35).JPG", desc: "Mind-bending sativa with potent effects that hit like a freight train.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                { id: "str30", name: "Northern Lights", type: "Flower - Indica", img: "images/product(36).JPG", desc: "Produces euphoric effects that settle in firmly throughout the body.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" }
+            ],
+            videos: [
+                { id: "vid1", img: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+                { id: "vid2", img: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=600", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+                { id: "vid3", img: "https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?q=80&w=600", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+            ]
+        };
+
+        // ================= 自动渲染引擎 =================
+        function renderAll() {
+            const dealsHtml = STORE_DATA.deals.map(p => `
+                <div class="p-card" style="border-color: var(--accent-orange);">
+                    <div style="position:absolute; background:var(--accent-orange); color:#fff; padding:5px 10px; font-weight:900; font-size:0.8rem; border-bottom-right-radius:12px; z-index:10;">${p.badge}</div>
+                    <img src="${p.img}" class="p-img clickable" onclick="openDetailModal('deals', '${p.id}')" onerror="this.src='https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600'">
                     <div class="p-info">
                         <span class="p-cat">${p.type}</span>
-                        <h3 class="p-title">${p.name}</h3>
-                        <select class="weight-select" id="sel_${p.id}">
-                            <option value="${p.halfOz}" data-weight="HALF OZ">HALF OZ - $${p.halfOz}</option>
-                            <option value="${p.oneOz}" data-weight="1 OZ">1 OZ - $${p.oneOz}</option>
-                            <option value="${p.halfP}" data-weight="HALF P">HALF P - $${p.halfP}</option>
+                        <h3 class="p-title clickable" onclick="openDetailModal('deals', '${p.id}')">${p.name}</h3>
+                        <select class="weight-select" id="sel_${p.id}" style="border-color:var(--accent-orange);">
+                            ${p.options.map(opt => `<option value="${opt.value}" data-weight="${opt.label}">${opt.text}</option>`).join('')}
                         </select>
-                        <div class="pound-note">FULL POUND? TEXT SALES</div>
+                        <div class="pound-note" style="color:var(--accent-orange);">${p.note}</div>
+                        <button class="btn-add" style="background:var(--accent-orange); color:#fff;" onclick="addWithWeight('${p.id}', '${p.name}')">ADD TO BAG</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('dynamic-deals').innerHTML = dealsHtml;
+
+            const menuHtml = STORE_DATA.menu.map(p => `
+                <div class="p-card">
+                    <img src="${p.img}" class="p-img clickable" onclick="openDetailModal('menu', '${p.id}')" onerror="this.src='https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600'">
+                    <div class="p-info">
+                        <span class="p-cat">${p.type}</span>
+                        <h3 class="p-title clickable" onclick="openDetailModal('menu', '${p.id}')">${p.name}</h3>
+                        <select class="weight-select" id="sel_${p.id}">
+                            ${p.options.map(opt => `<option value="${opt.value}" data-weight="${opt.label}">${opt.text}</option>`).join('')}
+                        </select>
+                        <div class="pound-note">${p.note}</div>
                         <button class="btn-add" onclick="addWithWeight('${p.id}', '${p.name}')">ADD TO BAG</button>
                     </div>
                 </div>
-            `;
-        });
-        menuContainer.innerHTML = menuHTML;
+            `).join('');
+            document.getElementById('dynamic-menu').innerHTML = menuHtml;
 
+            const videosHtml = STORE_DATA.videos.map(v => `
+                <div class="vid-card clickable" onclick="openVideoModal('${v.videoUrl}')">
+                    <img src="${v.img}">
+                    <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                </div>
+            `).join('');
+            document.getElementById('dynamic-videos').innerHTML = videosHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderAll);
+
+        // ================= 弹窗控制与逻辑 =================
+        function openDetailModal(category, id) {
+            const product = STORE_DATA[category].find(item => item.id === id);
+            if (!product) return;
+
+            document.getElementById('detail-img').src = product.img;
+            document.getElementById('detail-cat').innerText = product.type;
+            document.getElementById('detail-title').innerText = product.name;
+            document.getElementById('detail-desc').innerText = product.desc || "Premium quality guaranteed. Contact sales for more details on this batch.";
+
+            const isDeal = category === 'deals';
+            const color = isDeal ? 'var(--accent-orange)' : '#fff';
+            const bgColor = isDeal ? 'var(--accent-orange)' : '#fff';
+            const textColor = isDeal ? '#fff' : '#000';
+
+            const actionHtml = `
+                <select class="weight-select" id="modal_sel_${product.id}" style="border-color:${color};">
+                    ${product.options.map(opt => `<option value="${opt.value}" data-weight="${opt.label}">${opt.text}</option>`).join('')}
+                </select>
+                <div class="pound-note" style="color:${isDeal ? color : 'var(--text-muted)'};">${product.note}</div>
+                <button class="btn-add" style="background:${bgColor}; color:${textColor};" onclick="modalAddWithWeight('${product.id}', '${product.name}')">ADD TO BAG</button>
+            `;
+            document.getElementById('detail-actions').innerHTML = actionHtml;
+
+            document.getElementById('detail-modal').style.display = 'block';
+            document.body.classList.add('no-scroll');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+
+        function openVideoModal(url) {
+            document.getElementById('detail-video-frame').src = url;
+            document.getElementById('video-modal').style.display = 'block';
+            document.body.classList.add('no-scroll');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').style.display = 'none';
+            document.getElementById('detail-video-frame').src = ''; 
+            document.body.classList.remove('no-scroll');
+        }
+
+        // ================= 购物车核心功能 =================
         let cartData = [];
         let payMethod = 'CashApp';
 
-        // 优化版加入购物车逻辑
         function addWithWeight(id, baseName) {
             let selectElem = document.getElementById('sel_' + id);
+            _processAdd(selectElem, id, baseName);
+        }
+
+        function modalAddWithWeight(id, baseName) {
+            let selectElem = document.getElementById('modal_sel_' + id);
+            _processAdd(selectElem, id, baseName);
+            closeDetailModal();
+        }
+
+        function _processAdd(selectElem, id, baseName) {
             let selectedOption = selectElem.options[selectElem.selectedIndex];
-            
             let price = parseInt(selectedOption.value);
             let weightText = selectedOption.dataset.weight || selectedOption.text.split(' - ')[0]; 
             
@@ -496,9 +651,11 @@
             if (cartData.length === 0) return alert("YOUR BAG IS EMPTY!");
             closeCart();
             document.getElementById('checkout-view').style.display = 'block';
+            document.body.classList.add('no-scroll');
         }
         function closeCheckoutModal() {
             document.getElementById('checkout-view').style.display = 'none';
+            document.body.classList.remove('no-scroll');
         }
 
         function pickPay(el, method) {
@@ -507,20 +664,18 @@
             payMethod = method;
         }
 
-        // [透传报错版] 提交订单逻辑
+        // ================= 提交订单 =================
         function submitOrder() {
             let submitBtn = document.querySelector('.btn-submit-order');
             submitBtn.innerText = 'PROCESSING...';
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.7';
 
-            // 抓取表单数据
             const name = document.getElementById('c_name').value;
             const phone = document.getElementById('c_phone').value;
             const address = document.getElementById('c_address').value;
             const payment = payMethod;
 
-            // 拼装给 Telegram 发送的 HTML 消息
             let orderMsg = `🚨 <b>NEW ORDER RECEIVED</b> 🚨\n\n`;
             orderMsg += `👤 <b>Name:</b> ${name}\n`;
             orderMsg += `📞 <b>Phone:</b> ${phone}\n`;
@@ -542,12 +697,11 @@
             orderMsg += `🚚 <b>Shipping:</b> $${shipping}\n`;
             orderMsg += `💰 <b>TOTAL DUE:</b> $${totalDue}\n`;
 
-            // Telegram API 配置
-            const botToken = "8979648293:AAH60zR9Y4D-yPbCAJHOerp_1RjGJTVp-Ac";
+            // ⚠️ 警告：上线前请将 Token 移至后端！
+            const botToken = "YOUR_BOT_TOKEN_HERE"; 
             const chatId = "-1003838040554";
             const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            // 推送数据到 Telegram
             fetch(telegramUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -560,14 +714,12 @@
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    // 成功后关闭弹窗，弹出成功页面
                     document.getElementById('checkout-view').style.display = 'none';
                     document.getElementById('success-view').style.display = 'flex';
-                    cartData = []; // 清空购物车
+                    cartData = []; 
                     updateUI();
                 } else {
-                    // 【核心修改】：显示 Telegram 的真实错误原因！
-                    alert("Telegram Error: " + data.description);
+                    alert("Telegram Error: " + data.description + "\n\n⚠️ Developer Note: You are currently using a placeholder token. You must set up a backend endpoint for Telegram messages.");
                 }
             })
             .catch(error => {
