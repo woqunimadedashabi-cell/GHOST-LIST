@@ -115,13 +115,35 @@
         .vid-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
         .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--primary-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #fff; }
 
-        /* ================= 模块 6: Contact ================= */
+       /* ================= 模块 6: Contact ================= */
         .contact-box { background: var(--bg-surface); border: 2px solid var(--primary-neon); padding: 40px; border-radius: 16px; text-align: center; }
         .contact-box h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
         .channel-links { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; }
-        .btn-social { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px; border-radius: 12px; font-size: 1.5rem; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; }
+        /* 替换掉原来的 .btn-social，改成下面这样 */
+        .btn-social { 
+            position: relative; /* 建立定位基准 */
+            display: block; /* 让文字完美居中 */
+            text-align: center; 
+            padding: 20px; 
+            border-radius: 12px; 
+            font-size: 1.5rem; 
+            font-weight: 900; 
+            color: #fff; 
+            text-decoration: none; 
+            text-transform: uppercase; 
+        }
+        
+        /* 新增这一段，专门把图标钉死在左侧 */
+        .btn-social i {
+            position: absolute;
+            left: 50px; /* 图标距离左边的固定距离 */
+            top: 50%;
+            transform: translateY(-50%); /* 确保图标绝对垂直居中 */
+            font-size: 1.8rem;
+        }
         .btn-tg { background: #0088cc; }
         .btn-tato { background: #e838cc; } 
+        .btn-signal { background: #3A76F0; } /* 👈 这是新加的 Signal 蓝色 */
 
         /* ================= 右侧购物车抽屉 ================= */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; display: none; }
@@ -282,6 +304,8 @@
             <div class="channel-links">
                 <a href="#" class="btn-social btn-tg"><i class="fa-brands fa-telegram"></i> TELEGRAM</a>
                 <a href="#" class="btn-social btn-tato"><i class="fa-solid fa-comments"></i> TATO TALK</a>
+                <!-- 👇 这是新加的 Signal 按钮，自带官方图标 -->
+                <a href="#" class="btn-social btn-signal"><i class="fa-solid fa-comment"></i> SIGNAL</a>
             </div>
         </div>
     </section>
