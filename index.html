@@ -1,430 +1,665 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHOST LIST | Members Only</title>
+    <title>GHOST LIST | The Invisible Dispensary</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ================= 核心变量与重置 ================= */
+        /* ================= 核心视觉变量与系统 ================= */
         :root {
-            --bg-color: #0d0d0d;
-            --surface-color: #1a1a1a;
+            --bg-main: #0a0a0c;
+            --bg-surface: #131316;
+            --bg-input: #1a1a22;
             --primary-neon: #8E44AD; /* 霓虹紫 */
-            --primary-glow: rgba(142, 68, 173, 0.6);
-            --text-main: #ECF0F1; /* 幽灵白 */
-            --text-muted: #888888;
-            --font-body: 'Inter', sans-serif;
-            --font-grunge: 'Permanent Marker', cursive;
+            --primary-glow: rgba(142, 68, 173, 0.5);
+            --accent-orange: #ff6b35; /* 折扣/警示橙 */
+            --text-ghost: #ecf0f1;
+            --text-muted: #7e7e88;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --font-main: 'Inter', sans-serif;
+            --font-logo: 'Permanent Marker', cursive;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-ghost);
             line-height: 1.6;
-            overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(142, 68, 173, 0.1) 0%, transparent 50%),
-                linear-gradient(to bottom, transparent, #0a0a0a);
+                radial-gradient(circle at 80% 20%, rgba(142, 68, 173, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.03) 0%, transparent 40%);
         }
 
-        /* 滚动条美化 */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--surface-color); border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-neon); }
 
-        /* ================= 导航栏 ================= */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-family: var(--font-grunge);
-            font-size: 2rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary-glow);
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-neon);
-            text-shadow: 0 0 8px var(--primary-glow);
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .nav-icons i { cursor: pointer; transition: 0.3s; }
-        .nav-icons i:hover { color: var(--primary-neon); }
-
-        /* ================= Hero 区域 ================= */
-        .hero {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem 5%;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-family: var(--font-grunge);
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 20px rgba(255,255,255,0.1);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 3rem;
-        }
-
-        /* 霓虹按钮 */
-        .btn-neon {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: transparent;
-            color: #fff;
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 2px solid var(--primary-neon);
-            border-radius: 4px;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn-neon:hover {
-            background: var(--primary-neon);
-            box-shadow: 0 0 30px var(--primary-glow), inset 0 0 20px var(--primary-glow);
-            text-shadow: 0 0 5px #fff;
-        }
-
-        /* ================= 分类卡片区域 (对应原图 Pick your poison) ================= */
-        .section-container {
-            padding: 5rem 5%;
-        }
-
+        /* ================= 通用布局 ================= */
+        .container { max-width: 1400px; margin: 0 auto; padding: 4rem 5%; }
         .section-title {
-            text-align: center;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--primary-neon);
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;
         }
+        .section-title i { color: var(--primary-neon); }
+        .title-line { flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--primary-neon), transparent); }
+
+        /* ================= 导航条 ================= */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10, 10, 12, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-text { font-family: var(--font-logo); font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px var(--primary-glow); }
+        .badge-members { font-size: 0.65rem; background: rgba(142, 68, 173, 0.15); border: 1px solid var(--primary-neon); padding: 2px 8px; border-radius: 20px; color: #fff; }
         
-        .section-title::before, .section-title::after {
-            content: "";
-            height: 1px;
-            width: 40px;
-            background-color: var(--primary-neon);
-        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-ghost); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary-neon); }
 
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+        .header-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .cart-toggle { position: relative; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .cart-toggle:hover { color: var(--primary-neon); }
+        .cart-badge { position: absolute; top: -8px; right: -10px; background: var(--accent-orange); color: #fff; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        .category-card {
-            background-color: var(--surface-color);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 2rem;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-            cursor: pointer;
+        /* ================= 模块 3: Announcements (系统广播) ================= */
+        .announcement-bar {
+            background: var(--primary-neon); color: #fff; padding: 10px 0; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; overflow: hidden; white-space: nowrap; display: flex; align-items: center;
         }
+        .ticker-wrap { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 20s linear infinite; }
+        .ticker-item { padding: 0 2rem; display: inline-block; }
+        @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
-        /* 模拟暗黑产品背景 */
-        .card-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, #0a0a0a);
-            z-index: 1;
-        }
+        /* ================= 英雄区域 ================= */
+        .hero { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom, transparent, var(--bg-main)), url('https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=1920&auto=format&fit=crop') center/cover; }
+        .hero h1 { font-family: var(--font-logo); font-size: clamp(3rem, 6vw, 5rem); text-shadow: 0 5px 20px rgba(0,0,0,0.8); margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: #ddd; max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
-        .card-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .category-card h3 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-neon);
-            box-shadow: 0 10px 30px rgba(142, 68, 173, 0.2);
-        }
-
-        .tag {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            background: rgba(142, 68, 173, 0.2);
-            border: 1px solid var(--primary-neon);
-            color: #fff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            z-index: 2;
-        }
-
-        /* ================= 社群引流区域 (对应原图 Slide in the group chat) ================= */
-        .community-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .comm-card {
-            background-color: var(--surface-color);
-            border-radius: 16px;
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-
-        .comm-card:hover {
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .comm-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-        }
-
-        .comm-card h2 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .comm-stats {
-            color: var(--primary-neon);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* ================= 模块 2: Deals / On Sale (限时情报) ================= */
+        .deals-section { background: #111116; border-top: 1px solid var(--accent-orange); border-bottom: 1px solid var(--border-subtle); position: relative; }
+        .deals-section .section-title i { color: var(--accent-orange); }
+        .deals-section .title-line { background: linear-gradient(90deg, var(--accent-orange), transparent); }
         
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary-neon);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-glow);
-            animation: pulse 1.5s infinite;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+        .p-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; position: relative; }
+        .p-card:hover { transform: translateY(-5px); border-color: var(--primary-neon); box-shadow: 0 10px 30px rgba(142, 68, 173, 0.15); }
+        
+        .deal-tag { position: absolute; top: 10px; right: 10px; background: var(--accent-orange); color: #fff; padding: 4px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; z-index: 10; box-shadow: 0 0 10px rgba(255, 107, 53, 0.5); }
+        
+        .p-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border-subtle); }
+        .p-info { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .p-cat { font-size: 0.75rem; color: var(--primary-neon); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+        .p-title { font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+        
+        .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+        .price-now { font-size: 1.3rem; font-weight: 700; color: #fff; }
+        .price-old { font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; }
+        
+        .btn-add { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--primary-neon); color: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-add:hover { background: var(--primary-neon); box-shadow: 0 0 15px var(--primary-glow); }
+        .btn-add.deal-btn { border-color: var(--accent-orange); }
+        .btn-add.deal-btn:hover { background: var(--accent-orange); box-shadow: 0 0 15px rgba(255, 107, 53, 0.5); }
 
-        .comm-features {
-            list-style: none;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
+        /* ================= 模块 1: Menu / Products (核心菜单) ================= */
+        /* 复用 .product-grid 和 .p-card 样式 */
 
-        .comm-features li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* ================= 模块 4: Touchdown Videos (安全降落视频) ================= */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .vid-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; background: #000; border: 1px solid var(--border-subtle); cursor: pointer; transition: 0.3s; }
+        .vid-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
+        .vid-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.3); }
+        .play-btn { width: 60px; height: 60px; background: rgba(142, 68, 173, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; box-shadow: 0 0 20px var(--primary-glow); transition: 0.3s; }
+        .vid-card:hover img { opacity: 0.4; transform: scale(1.05); }
+        .vid-card:hover .play-btn { transform: scale(1.1); background: var(--primary-neon); }
+        .vid-label { position: absolute; bottom: 15px; left: 15px; color: #fff; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .vid-label .tag { background: #2ecc71; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
 
-        .comm-features i {
-            color: var(--primary-neon);
-            font-size: 0.8rem;
-        }
+        /* ================= 模块 6: Contact Us / Channels ================= */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .channel-card { background: var(--bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 20px; transition: 0.3s; text-decoration: none; color: var(--text-ghost); }
+        .channel-card:hover { border-color: var(--primary-neon); transform: translateY(-3px); }
+        .channel-icon { font-size: 2.5rem; color: var(--primary-neon); width: 60px; text-align: center; }
+        .channel-info h3 { font-size: 1.2rem; margin-bottom: 5px; color: #fff; }
+        .channel-info p { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .contact-form { display: flex; flex-direction: column; gap: 15px; }
+        .contact-form input, .contact-form textarea { background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 12px; border-radius: 8px; color: #fff; outline: none; transition: 0.3s; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--primary-neon); }
+        .contact-form button { padding: 12px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .contact-form button:hover { background: var(--primary-neon); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(142, 68, 173, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(142, 68, 173, 0); }
-        }
+        /* ================= 模块 5: The Cart Checkout Terminal (集成自上一版) ================= */
+        .checkout-terminal { background: #050507; border-top: 1px solid var(--border-subtle); padding: 5rem 0; }
+        .checkout-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; }
+        .form-block { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
+        .form-block h3 { margin-bottom: 1.5rem; color: #fff; display: flex; align-items: center; gap: 10px; border-left: 3px solid var(--primary-neon); padding-left: 10px; }
+        
+        .input-group { margin-bottom: 1rem; }
+        .input-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        .input-group input { width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 12px; border-radius: 8px; color: #fff; transition: 0.3s; }
+        .input-group input:focus { outline: none; border-color: var(--primary-neon); box-shadow: 0 0 10px rgba(142, 68, 173, 0.2); }
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        /* ================= 移动端适配 ================= */
-        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; }
+        .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .pay-opt { background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 15px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; position: relative; }
+        .pay-opt input { position: absolute; opacity: 0; }
+        .pay-opt i { font-size: 1.5rem; color: var(--text-muted); }
+        .pay-opt.selected { border-color: var(--primary-neon); background: rgba(142,68,173,0.1); }
+        .pay-opt.selected i { color: var(--primary-neon); }
+        
+        /* 结算账单面板 */
+        .summary-block { background: var(--bg-input); border-radius: 12px; padding: 2rem; position: sticky; top: 100px; }
+        .summary-items { max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem; }
+        .s-item { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+        .s-item-info h5 { color: #fff; font-size: 0.9rem; }
+        .s-item-info span { color: var(--text-muted); font-size: 0.8rem; }
+        .s-item-price { font-weight: 700; color: #fff; }
+        
+        .ledger { margin-bottom: 2rem; }
+        .l-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); font-size: 0.95rem; }
+        .l-total { border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 15px; margin-top: 10px; color: #fff; font-size: 1.3rem; font-weight: 700; }
+        
+        .btn-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, #9b5de5, var(--primary-neon)); color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 20px rgba(142, 68, 173, 0.4); }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--primary-glow); filter: brightness(1.2); }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* 移动端暂时隐藏导航条，保留汉堡菜单图标 */
-            .mobile-menu-btn { display: block; }
-            .community-grid { grid-template-columns: 1fr; }
-            .comm-card { padding: 2rem; }
-            .comm-card h2 { font-size: 2rem; }
+        /* ================= 右侧滑出购物车抽屉 (Cart Drawer) ================= */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .cart-overlay.active { opacity: 1; pointer-events: auto; }
+        .cart-drawer { position: fixed; top: 0; right: -450px; width: 100%; max-width: 400px; height: 100vh; background: var(--bg-surface); box-shadow: -5px 0 30px rgba(0,0,0,0.5); z-index: 1000; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; border-left: 1px solid var(--border-subtle); }
+        .cart-drawer.active { right: 0; }
+        
+        .cd-header { padding: 1.5rem; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+        .cd-header h2 { font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .cd-close { cursor: pointer; color: var(--text-muted); font-size: 1.5rem; transition: 0.3s; }
+        .cd-close:hover { color: #fff; }
+        
+        .cd-body { flex-grow: 1; padding: 1.5rem; overflow-y: auto; }
+        .empty-msg { text-align: center; color: var(--text-muted); margin-top: 2rem; }
+        
+        .cd-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid transparent; }
+        .cd-item-info h4 { font-size: 0.9rem; color: #fff; }
+        .cd-item-info p { font-size: 0.8rem; color: var(--primary-neon); font-weight: 600; margin-top: 4px; }
+        .cd-qty-ctrl { display: flex; align-items: center; gap: 8px; background: var(--bg-surface); padding: 4px 8px; border-radius: 6px; }
+        .cd-qty-ctrl button { background: none; border: none; color: #fff; cursor: pointer; }
+        
+        .cd-footer { padding: 1.5rem; border-top: 1px solid var(--border-subtle); background: var(--bg-main); }
+        .cd-subtotal { display: flex; justify-content: space-between; color: #fff; font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem; }
+        .btn-checkout { display: block; width: 100%; text-align: center; padding: 12px; background: #fff; color: #000; text-decoration: none; font-weight: 700; border-radius: 6px; text-transform: uppercase; transition: 0.3s; }
+        .btn-checkout:hover { background: var(--primary-neon); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* ================= 成功提示弹窗 (自上一版) ================= */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: #0f0f14; border: 2px solid var(--primary-neon); width: 90%; max-width: 500px; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 0 40px var(--primary-glow); transform: scale(0.9); transition: 0.3s; }
+        .modal.active .modal-content { transform: scale(1); }
+        .modal-content i.fa-circle-check { font-size: 3rem; color: var(--primary-neon); margin-bottom: 1rem; }
+        .modal-content h3 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+        .modal-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .code-box { background: #000; padding: 15px; border-radius: 8px; font-family: monospace; color: #2ecc71; font-size: 0.8rem; text-align: left; white-space: pre-wrap; margin-bottom: 1.5rem; border: 1px solid #333; }
+        .btn-close-modal { padding: 10px 20px; background: transparent; border: 1px solid var(--text-muted); color: #fff; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .btn-close-modal:hover { border-color: #fff; }
+
+        /* ================= 响应式 ================= */
+        @media (max-width: 992px) {
+            .checkout-grid, .contact-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <div class="announcement-bar">
+        <div class="ticker-wrap">
+            <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 8PM EST</div>
+            <div class="ticker-item"><i class="fa-solid fa-truck"></i> ALL ORDERS OVER $200 UPGRADED TO FREE OVERNIGHT SHIPPING</div>
+            <div class="ticker-item"><i class="fa-solid fa-eye-slash"></i> GHOST LIST MEMBERS ONLY - INVITE LINKS CLOSING SOON</div>
+        </div>
+    </div>
+
     <header>
-        <div class="logo">GHOST</div>
+        <a href="#" class="logo-area">
+            <span class="logo-text">GHOST</span>
+            <span class="badge-members">LIST</span>
+        </a>
         <ul class="nav-links">
-            <li><a href="#">Shop</a></li>
-            <li><a href="#">Exclusive Drops</a></li>
-            <li><a href="#">The Myth</a></li>
+            <li><a href="#deals">Deals</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#videos">Touchdowns</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="nav-icons">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <i class="fa-regular fa-user"></i>
-            <i class="fa-solid fa-lock" style="color: var(--primary-neon);"></i>
-            <i class="fa-solid fa-bars mobile-menu-btn"></i>
+        <div class="header-actions">
+            <div class="cart-toggle" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <div class="cart-badge" id="nav-cart-count">0</div>
+            </div>
         </div>
     </header>
 
     <section class="hero">
-        <h1>THE INVISIBLE<br>LIST</h1>
-        <p>A curated selection. A moment in time. Access is earned, not given. Premium quality, strictly strictly confidential.</p>
-        <a href="#drops" class="btn-neon">Secure Your Access</a>
+        <h1>THE INVISIBLE LIST</h1>
+        <p>A curated selection. A moment in time. Access is earned. Slide in the group chat for the password.</p>
     </section>
 
-    <section class="section-container" id="drops">
-        <div class="section-title"><i class="fa-solid fa-skull"></i> UNSEEN COLLECTIONS <i class="fa-solid fa-skull"></i></div>
-        <div class="category-grid">
-            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=800&auto=format&fit=crop') center/cover;">
-                <div class="tag"><i class="fa-solid fa-leaf"></i> FLOWER</div>
-                <div class="card-bg"></div>
-                <div class="card-content">
-                    <h3>Loud Buds.</h3>
-                    <p>Hand-trimmed eighths that smoke like a flex.</p>
-                </div>
+    <section class="deals-section" id="deals">
+        <div class="container">
+            <div class="section-title">
+                <i class="fa-solid fa-fire"></i> THE HOTTEST RIGHT NOW
+                <div class="title-line"></div>
             </div>
-            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=800&auto=format&fit=crop') center/cover;">
-                <div class="tag"><i class="fa-solid fa-cloud"></i> VAPE</div>
-                <div class="card-bg"></div>
-                <div class="card-content">
-                    <h3>Clean Clouds.</h3>
-                    <p>Live rosin, glass body, zero distillate.</p>
+            <div class="product-grid">
+                <div class="p-card">
+                    <span class="deal-tag">BUNDLE - SAVE $74</span>
+                    <img src="https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Weed">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Starter Pack</div>
+                            <h3 class="p-title">The Stash Box</h3>
+                            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">7g Flower + 1g Vape + Edibles</p>
+                            <div class="price-row">
+                                <span class="price-now">$199</span>
+                                <span class="price-old">$273</span>
+                            </div>
+                        </div>
+                        <button class="btn-add deal-btn" onclick="addToCart('d1', 'The Stash Box Bundle', 199)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
                 </div>
-            </div>
-            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=800&auto=format&fit=crop') center/cover;">
-                <div class="tag"><i class="fa-solid fa-gem"></i> CONCENTRATES</div>
-                <div class="card-bg"></div>
-                <div class="card-content">
-                    <h3>Sticky Stuff.</h3>
-                    <p>Live rosin, hash rosin, badder, diamonds.</p>
-                </div>
-            </div>
-            <div class="category-card" style="background: linear-gradient(to top, #111, transparent), url('https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=800&auto=format&fit=crop') center/cover;">
-                <div class="tag"><i class="fa-solid fa-candy-cane"></i> EDIBLES</div>
-                <div class="card-bg"></div>
-                <div class="card-content">
-                    <h3>Tasty Highs.</h3>
-                    <p>Gummies, chocolates, dosed clean.</p>
+                <div class="p-card">
+                    <span class="deal-tag">LIMITED DROP</span>
+                    <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Edibles">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Edibles</div>
+                            <h3 class="p-title">Sleep Tight Squares</h3>
+                            <div class="price-row">
+                                <span class="price-now">$18</span>
+                                <span class="price-old">$25</span>
+                            </div>
+                        </div>
+                        <button class="btn-add deal-btn" onclick="addToCart('d2', 'Sleep Tight Squares', 18)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-container">
-         <div class="section-title"><i class="fa-solid fa-network-wired"></i> THE GHOST CHANNELS <i class="fa-solid fa-network-wired"></i></div>
-         <div class="community-grid">
-            <div class="comm-card">
-                <i class="fa-brands fa-telegram comm-icon"></i>
-                <h2>Ghost List on Telegram</h2>
-                <div class="comm-stats">
-                    <div class="pulse-dot"></div> 2,847 Initiates · Active right now
-                </div>
-                <ul class="comm-features">
-                    <li><i class="fa-solid fa-bolt"></i> Drop alerts 24hrs before they go live</li>
-                    <li><i class="fa-solid fa-key"></i> Member-only discount codes</li>
-                    <li><i class="fa-solid fa-gift"></i> Monthly free product giveaways</li>
-                </ul>
-                <a href="#" class="btn-neon" style="padding: 0.8rem 2rem; font-size: 0.9rem;">Join the Signal</a>
+    <section id="menu">
+        <div class="container">
+            <div class="section-title">
+                <i class="fa-solid fa-skull"></i> UNSEEN COLLECTIONS
+                <div class="title-line" style="background: linear-gradient(90deg, #333, transparent);"></div>
             </div>
-
-            <div class="comm-card">
-                <i class="fa-brands fa-discord comm-icon"></i>
-                <h2>Ghost List on Discord</h2>
-                <div class="comm-stats">
-                    <div class="pulse-dot"></div> 4,102 Initiates · 38 Online
+            <div class="product-grid">
+                <div class="p-card">
+                    <img src="https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Flower">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Flower - Sativa</div>
+                            <h3 class="p-title">Sunrise Stack (3.5g)</h3>
+                            <div class="price-row"><span class="price-now">$55</span></div>
+                        </div>
+                        <button class="btn-add" onclick="addToCart('m1', 'Sunrise Stack (3.5g)', 55)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
                 </div>
-                <ul class="comm-features">
-                    <li><i class="fa-solid fa-comments"></i> Strain reviews & growing talk</li>
-                    <li><i class="fa-solid fa-eye"></i> Early access to new drops</li>
-                    <li><i class="fa-solid fa-shield-halved"></i> Real community, no bots, no noise</li>
-                </ul>
-                <a href="#" class="btn-neon" style="padding: 0.8rem 2rem; font-size: 0.9rem;">Enter the Server</a>
+                <div class="p-card">
+                    <img src="https://images.unsplash.com/photo-1572979269559-0f2c41804ff6?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Vape">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Vape - Live Rosin</div>
+                            <h3 class="p-title">Cloud Nine 1g</h3>
+                            <div class="price-row"><span class="price-now">$65</span></div>
+                        </div>
+                        <button class="btn-add" onclick="addToCart('m2', 'Cloud Nine Vape 1g', 65)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
+                </div>
+                <div class="p-card">
+                    <img src="https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Concentrate">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Concentrate</div>
+                            <h3 class="p-title">Tangie Badder 1g</h3>
+                            <div class="price-row"><span class="price-now">$75</span></div>
+                        </div>
+                        <button class="btn-add" onclick="addToCart('m3', 'Tangie Badder 1g', 75)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
+                </div>
+                <div class="p-card">
+                    <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600&auto=format&fit=crop" class="p-img" alt="Edible">
+                    <div class="p-info">
+                        <div>
+                            <div class="p-cat">Edibles</div>
+                            <h3 class="p-title">Watermelon Drops</h3>
+                            <div class="price-row"><span class="price-now">$20</span></div>
+                        </div>
+                        <button class="btn-add" onclick="addToCart('m4', 'Watermelon Drops', 20)"><i class="fa-solid fa-plus"></i> ADD TO BAG</button>
+                    </div>
+                </div>
             </div>
-         </div>
+        </div>
     </section>
 
+    <section id="videos" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-title">
+                <i class="fa-solid fa-video"></i> SECURE TOUCHDOWNS
+                <div class="title-line" style="background: linear-gradient(90deg, #555, transparent);"></div>
+            </div>
+            <p style="color:var(--text-muted); margin-bottom:2rem;">Real packages landing daily. Quality speaks for itself. No fakes, no games.</p>
+            <div class="video-grid">
+                <div class="vid-card">
+                    <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop" alt="Box">
+                    <div class="vid-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="vid-label"><span class="tag">VERIFIED</span> NY Touchdown - Stash Box</div>
+                </div>
+                <div class="vid-card">
+                    <img src="https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=600&auto=format&fit=crop" alt="Bag">
+                    <div class="vid-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="vid-label"><span class="tag">VERIFIED</span> TX Touchdown - Vapes</div>
+                </div>
+                <div class="vid-card">
+                    <img src="https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?q=80&w=600&auto=format&fit=crop" alt="Package">
+                    <div class="vid-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="vid-label"><span class="tag">VERIFIED</span> FL Touchdown - Flower</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="checkout-terminal" id="checkout">
+        <div class="container">
+            <div class="section-title">
+                <i class="fa-solid fa-terminal"></i> SECURE CHECKOUT TERMINAL
+                <div class="title-line"></div>
+            </div>
+            
+            <div class="checkout-grid">
+                <div class="left-col">
+                    <form id="order-form" onsubmit="event.preventDefault(); processCheckout();">
+                        <div class="form-block">
+                            <h3><i class="fa-solid fa-truck-fast"></i> Shipping Details</h3>
+                            <div class="row-2">
+                                <div class="input-group"><label>First Name</label><input type="text" id="fname" required></div>
+                                <div class="input-group"><label>Last Name</label><input type="text" id="lname" required></div>
+                            </div>
+                            <div class="input-group"><label>Phone Number (For Sales to Text You)</label><input type="tel" id="phone" required></div>
+                            <div class="input-group"><label>Street Address</label><input type="text" id="address" required></div>
+                            <div class="row-2">
+                                <div class="input-group"><label>City</label><input type="text" id="city" required></div>
+                                <div class="input-group"><label>Zip Code</label><input type="text" id="zip" required></div>
+                            </div>
+                        </div>
+
+                        <div class="form-block">
+                            <h3><i class="fa-solid fa-wallet"></i> Payment Method</h3>
+                            <div class="payment-methods">
+                                <label class="pay-opt selected" onclick="selectPay(this, 'CashApp')">
+                                    <input type="radio" name="pay" checked>
+                                    <i class="fa-solid fa-money-bill-trend-up"></i> CashApp
+                                </label>
+                                <label class="pay-opt" onclick="selectPay(this, 'Zelle')">
+                                    <input type="radio" name="pay">
+                                    <i class="fa-solid fa-building-columns"></i> Zelle
+                                </label>
+                                <label class="pay-opt" onclick="selectPay(this, 'Apple Pay')">
+                                    <input type="radio" name="pay">
+                                    <i class="fa-brands fa-apple"></i> Apple Pay
+                                </label>
+                                <label class="pay-opt" onclick="selectPay(this, 'Crypto')">
+                                    <input type="radio" name="pay">
+                                    <i class="fa-brands fa-bitcoin"></i> Crypto
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="right-col">
+                    <div class="summary-block">
+                        <h3 style="color:#fff; margin-bottom:1.5rem;"><i class="fa-solid fa-receipt"></i> Order Summary</h3>
+                        
+                        <div class="summary-items" id="co-items">
+                            </div>
+                        
+                        <div class="ledger">
+                            <div class="l-row"><span>Subtotal</span><span id="co-sub">$0.00</span></div>
+                            <div class="l-row"><span>Shipping</span><span id="co-ship">$0.00</span></div>
+                            <div class="l-row l-total"><span>TOTAL</span><span id="co-total" style="color:var(--primary-neon);">$0.00</span></div>
+                        </div>
+                        
+                        <button class="btn-submit" onclick="document.getElementById('order-form').requestSubmit();">
+                            <i class="fa-solid fa-paper-plane"></i> SEND TO SALES
+                        </button>
+                        <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;">No payment is taken here. Our team will contact you securely.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: #0a0a0c;">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <h2 style="font-size: 2.5rem; color: #fff; margin-bottom: 10px; font-family: var(--font-logo);">THE GHOST CHANNELS</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Join the initiates. Get early access to drops, strain reviews, and real community.</p>
+                    
+                    <a href="#" class="channel-card" style="margin-bottom: 1rem;">
+                        <i class="fa-brands fa-telegram channel-icon"></i>
+                        <div class="channel-info">
+                            <h3>Telegram Broadcast</h3>
+                            <p>Drop alerts 24hrs early. Discount codes.</p>
+                        </div>
+                    </a>
+                    <a href="#" class="channel-card">
+                        <i class="fa-brands fa-discord channel-icon"></i>
+                        <div class="channel-info">
+                            <h3>Discord Server</h3>
+                            <p>Chat with growers, reviews, no bots.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div style="background: var(--bg-surface); padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
+                    <h3 style="color:#fff; margin-bottom: 1.5rem;"><i class="fa-solid fa-envelope"></i> SECURE MESSAGE</h3>
+                    <div class="contact-form">
+                        <input type="text" placeholder="Your Alias (Name)">
+                        <input type="email" placeholder="Email Address">
+                        <textarea rows="4" placeholder="Encrypted Message..."></textarea>
+                        <button type="button" onclick="alert('Message encrypted and sent to HQ.')">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cd-header">
+            <h2><i class="fa-solid fa-bag-shopping"></i> Your Bag</h2>
+            <i class="fa-solid fa-xmark cd-close" onclick="toggleCart()"></i>
+        </div>
+        <div class="cd-body" id="drawer-items">
+            </div>
+        <div class="cd-footer">
+            <div class="cd-subtotal"><span>Subtotal</span><span id="drawer-subtotal">$0.00</span></div>
+            <a href="#checkout" class="btn-checkout" onclick="toggleCart()">Secure Checkout</a>
+        </div>
+    </div>
+
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check"></i>
+            <h3>ORDER TRANSMITTED</h3>
+            <p>Your order details have been securely pushed to our sales team. A rep will text you shortly with payment instructions.</p>
+            <div class="code-box" id="modal-code"></div>
+            <button class="btn-close-modal" onclick="closeModal()">ACKNOWLEDGE & CLOSE</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. 全局购物车状态
+        let cart = [];
+        let selectedPayMethod = 'CashApp';
+
+        // 2. 加购逻辑
+        function addToCart(id, name, price) {
+            let item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty++;
+            } else {
+                cart.push({ id, name, price, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart(true); // 打开抽屉
+        }
+
+        function updateQty(id, change) {
+            let item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty += change;
+            if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
+
+        // 3. 统一更新 UI (导航数字、抽屉、结算台)
+        function updateCartUI() {
+            // 计算总数和小计
+            let totalQty = 0;
+            let subtotal = 0;
+            
+            let drawerHTML = '';
+            let checkoutHTML = '';
+
+            if (cart.length === 0) {
+                drawerHTML = `<div class="empty-msg">Your bag is empty. Start shopping.</div>`;
+                checkoutHTML = `<div style="color:var(--text-muted); font-size:0.9rem;">Cart is empty.</div>`;
+            } else {
+                cart.forEach(item => {
+                    let itemTotal = item.price * item.qty;
+                    totalQty += item.qty;
+                    subtotal += itemTotal;
+                    
+                    // 抽屉项
+                    drawerHTML += `
+                        <div class="cd-item">
+                            <div class="cd-item-info">
+                                <h4>${item.name}</h4>
+                                <p>$${itemTotal}</p>
+                            </div>
+                            <div class="cd-qty-ctrl">
+                                <button onclick="updateQty('${item.id}', -1)"><i class="fa-solid fa-minus"></i></button>
+                                <span>${item.qty}</span>
+                                <button onclick="updateQty('${item.id}', 1)"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    `;
+
+                    // 结算台项
+                    checkoutHTML += `
+                        <div class="s-item">
+                            <div class="s-item-info">
+                                <h5>${item.name}</h5>
+                                <span>Qty: ${item.qty} (@ $${item.price})</span>
+                            </div>
+                            <div class="s-item-price">$${itemTotal}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            // 更新 DOM
+            document.getElementById('nav-cart-count').innerText = totalQty;
+            document.getElementById('drawer-items').innerHTML = drawerHTML;
+            document.getElementById('drawer-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            
+            document.getElementById('co-items').innerHTML = checkoutHTML;
+            document.getElementById('co-sub').innerText = `$${subtotal.toFixed(2)}`;
+
+            // 运费计算
+            let shipping = 0;
+            if (subtotal > 0 && subtotal < 200) shipping = 15;
+            
+            document.getElementById('co-ship').innerText = shipping === 0 ? (subtotal === 0 ? '$0.00' : 'FREE') : `$${shipping.toFixed(2)}`;
+            document.getElementById('co-total').innerText = `$${(subtotal + shipping).toFixed(2)}`;
+        }
+
+        // 4. 抽屉控制
+        function toggleCart(forceOpen = false) {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (forceOpen) {
+                drawer.classList.add('active');
+                overlay.classList.add('active');
+            } else {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+        }
+
+        // 5. 支付方式选择
+        function selectPay(element, method) {
+            document.querySelectorAll('.pay-opt').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedPayMethod = method;
+        }
+
+        // 6. 最终提交处理
+        function processCheckout() {
+            if (cart.length === 0) {
+                alert("Please add items to your cart before sending to sales.");
+                return;
+            }
+
+            // 收集表单数据
+            const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value + ', ' + document.getElementById('city').value + ' ' + document.getElementById('zip').value;
+            
+            // 算账
+            let subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            let shipping = subtotal >= 200 ? 0 : 15;
+            let total = subtotal + shipping;
+
+            // 生成代码块展示
+            let itemsText = cart.map(i => `  - ${i.name} x${i.qty} ($${i.price * i.qty})`).join('\n');
+            const logText = `[SYS_LOG] ORDER GENERATED
+--------------------------
+TARGET: SALES_BOT_API
+CUSTOMER: ${name}
+CONTACT:  ${phone}
+DELIVER:  ${address}
+METHOD:   [${selectedPayMethod}]
+
+ITEMS:
+${itemsText}
+
+TOTAL DUE: $${total.toFixed(2)}
+STATUS: AWAITING_REP_CONTACT
+--------------------------`;
+            
+            document.getElementById('modal-code').innerText = logText;
+            document.getElementById('success-modal').classList.add('active');
+            
+            // 清空购物车逻辑（可选）
+            // cart = []; updateCartUI(); document.getElementById('order-form').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
