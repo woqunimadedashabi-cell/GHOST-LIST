@@ -161,6 +161,46 @@
         .success-box h2 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
         .success-box p { font-size: 1.5rem; color: #ddd; margin-bottom: 30px; }
         .success-box button { padding: 20px 40px; font-size: 1.5rem; font-weight: 900; background: #fff; color: #000; border: none; border-radius: 12px; cursor: pointer; }
+
+        /* ================= 手机端终极紧凑排版优化 (核心修改区) ================= */
+        @media (max-width: 768px) {
+            /* 1. 产品列表强制变两列，缩小间距 */
+            .product-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px; 
+            }
+            .container { padding: 30px 15px; }
+            .section-title { font-size: 2rem; margin-bottom: 20px; }
+            
+            /* 2. 压缩产品卡片内部空间 */
+            .p-img { height: 130px; border-bottom: 1px solid #333; }
+            .p-info { padding: 10px; }
+            
+            /* 3. 字体整体等比例缩小 */
+            .p-cat { font-size: 0.65rem; margin-bottom: 2px; }
+            .p-title { font-size: 1rem; margin-bottom: 8px; line-height: 1.1; }
+            
+            /* 4. 压缩下拉框和按钮 */
+            .weight-select { 
+                padding: 6px 4px; 
+                font-size: 0.8rem; 
+                margin-bottom: 8px; 
+                border-radius: 6px;
+                border-width: 1px;
+            }
+            .pound-note { font-size: 0.65rem; margin-bottom: 8px; line-height: 1.1; }
+            .btn-add { 
+                padding: 10px; 
+                font-size: 0.9rem; 
+                border-radius: 8px; 
+            }
+            
+            /* 压缩一些不必要的空间 */
+            .hero { padding: 40px 5%; }
+            .hero h1 { font-size: 2.5rem; }
+            .logo-text { font-size: 1.8rem; }
+            .cart-btn { padding: 8px 15px; font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -180,7 +220,6 @@
         <a href="#" class="logo-text">GHOST LIST</a>
         <div class="header-actions">
             <a href="#menu" class="nav-link">MENU</a>
-            <!-- 根据截图要求，将 REVIEWS 改为了 TOUCHDOWNS -->
             <a href="#videos" class="nav-link">TOUCHDOWNS</a>
             <button class="cart-btn" onclick="openCart()">
                 <i class="fa-solid fa-cart-shopping"></i> CART <span class="cart-badge" id="nav-count">0</span>
@@ -275,12 +314,8 @@
         </div>
     </div>
 
-    <!-- ================= 核心 JavaScript (包含25个大麻品种的数据库) ================= -->
+    <!-- ================= 核心 JavaScript ================= -->
     <script>
-        // 【老板请看这里】
-        // 这里是你的 25 款产品的中央数据库。
-        // 你如果以后要改价格或者换名字，直接在这里改对应的数字就行了，网页会自动更新！
-        // halfOz: 半盎司价格 | oneOz: 1盎司价格 | halfP: 半磅价格
         const productsList = [
             { id: "str1",  name: "Sunrise Stack", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1629831419794-01306d860d5c?q=80&w=600", halfOz: 80, oneOz: 150, halfP: 700 },
             { id: "str2",  name: "Lemon Cherry Gelato", type: "Flower - Hybrid", img: "https://images.unsplash.com/photo-1603584826848-18548325eb3a?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 },
@@ -309,7 +344,6 @@
             { id: "str25", name: "Pineapple Express", type: "Flower - Sativa", img: "https://images.unsplash.com/photo-1616024921936-224190c76579?q=80&w=600", halfOz: 90, oneOz: 170, halfP: 800 }
         ];
 
-        // 自动将这25个产品渲染到网页上
         const menuContainer = document.getElementById('dynamic-menu');
         let menuHTML = '';
         
@@ -320,17 +354,12 @@
                     <div class="p-info">
                         <span class="p-cat">${p.type}</span>
                         <h3 class="p-title">${p.name}</h3>
-                        
-                        <!-- 重量及价格选择下拉框 -->
                         <select class="weight-select" id="sel_${p.id}">
                             <option value="${p.halfOz}">HALF OZ - $${p.halfOz}</option>
                             <option value="${p.oneOz}">1 OZ - $${p.oneOz}</option>
                             <option value="${p.halfP}">HALF P - $${p.halfP}</option>
                         </select>
-                        
-                        <!-- 极简的全磅联系销售提示 -->
                         <div class="pound-note">FULL POUND? TEXT SALES</div>
-                        
                         <button class="btn-add" onclick="addWithWeight('${p.id}', '${p.name}')">ADD TO BAG</button>
                     </div>
                 </div>
@@ -338,19 +367,14 @@
         });
         menuContainer.innerHTML = menuHTML;
 
-
-        // ================= 后台购物车逻辑 =================
         let cartData = [];
         let payMethod = 'CashApp';
 
-        // 带重量选择的加购逻辑
         function addWithWeight(id, baseName) {
             let selectElem = document.getElementById('sel_' + id);
             let price = parseInt(selectElem.value);
-            // 提取选中的重量文字，比如 "HALF OZ"
             let weightText = selectElem.options[selectElem.selectedIndex].text.split(' - ')[0]; 
             let finalName = baseName + ' (' + weightText + ')';
-            // 创建一个独一无二的ID，比如 str1-HALFOZ，这样不同重量不会合并算数
             let uniqueId = id + '-' + weightText.replace(/\s+/g, '');
 
             let item = cartData.find(i => i.id === uniqueId);
@@ -358,7 +382,7 @@
             else cartData.push({ id: uniqueId, name: finalName, price: price, qty: 1 });
             
             updateUI();
-            openCart(); // 添加后直接弹开抽屉
+            openCart();
         }
 
         function changeQty(id, delta) {
@@ -369,7 +393,6 @@
             updateUI();
         }
 
-        // 界面刷新逻辑
         function updateUI() {
             let subtotal = 0;
             let count = 0;
@@ -408,7 +431,6 @@
             document.getElementById('sum-total').innerText = `$${subtotal + shipping}`;
         }
 
-        // 抽屉与全屏结算开关
         function openCart() { 
             document.getElementById('cart-drawer').classList.add('active'); 
             document.getElementById('cart-bg').style.display = 'block'; 
@@ -426,7 +448,6 @@
             document.getElementById('checkout-view').style.display = 'none';
         }
 
-        // 支付选择与提交
         function pickPay(el, method) {
             document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
             el.classList.add('selected');
