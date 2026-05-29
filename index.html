@@ -193,10 +193,10 @@
     <!-- 顶部跑马灯 -->
     <div class="announcement-bar">
         <div class="ticker-wrap">
-            <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 8PM EST</div>
-            <div class="ticker-item"><i class="fa-solid fa-truck"></i> ALL ORDERS OVER $200 UPGRADED TO FREE OVERNIGHT SHIPPING</div>
+            <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 2PM EST</div>
+            <div class="ticker-item"><i class="fa-solid fa-truck"></i> 🚚 $50 Flat-Rate UPS Next Day Shipping • No Hidden Fees</div>
             <div class="ticker-item"><i class="fa-solid fa-fire"></i> THE HOTTEST CALI FLOWER SHIPPED NATIONWIDE</div>
-            <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: NEW DROPS LIVE AT 8PM EST</div>
+            <div class="ticker-item"><i class="fa-solid fa-lock"></i> SECURE COMMS: ⏰ 2:00 PM EST sharp cutoff</div>
         </div>
     </div>
 
@@ -314,11 +314,11 @@
                     <div class="pay-btn selected" onclick="pickPay(this, 'CashApp')">CASHAPP</div>
                     <div class="pay-btn" onclick="pickPay(this, 'Zelle')">ZELLE</div>
                     <div class="pay-btn" onclick="pickPay(this, 'Apple Pay')">APPLE PAY</div>
-                    <div class="pay-btn" onclick="pickPay(this, 'Crypto')">CRYPTO</div>
+                    <div class="pay-btn" onclick="pickPay(this, 'Chime')">Chime</div>
                 </div>
                 <div class="co-summary">
                     <div class="co-summary-row"><span>Items Subtotal:</span><span id="sum-sub">$0</span></div>
-                    <div class="co-summary-row" style="font-size: 1.2rem; color: var(--text-muted);"><span>Shipping:</span><span id="sum-ship">$15</span></div>
+                    <div class="co-summary-row" style="font-size: 1.2rem; color: var(--text-muted);"><span>Shipping:</span><span id="sum-ship">$50</span></div>
                     <div class="co-summary-row co-summary-total"><span>TOTAL DUE:</span><span id="sum-total">$0</span></div>
                 </div>
                 <button type="submit" class="btn-submit-order">SEND TO SALES NOW</button>
@@ -447,9 +447,9 @@
             document.getElementById('cart-items').innerHTML = html;
             document.getElementById('cart-sub').innerText = `$${subtotal}`;
             
-            let shipping = (subtotal > 0 && subtotal < 200) ? 15 : 0;
+            let shipping = (subtotal > 0 && subtotal < 200) ? 50 : 0;
             document.getElementById('sum-sub').innerText = `$${subtotal}`;
-            document.getElementById('sum-ship').innerText = shipping === 0 ? 'FREE' : `$${shipping}`;
+            document.getElementById('sum-ship').innerText = shipping === 0 ? '50' : `$${shipping}`;
             document.getElementById('sum-total').innerText = `$${subtotal + shipping}`;
         }
 
