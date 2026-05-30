@@ -423,7 +423,6 @@
         }
 
         // ================= 网站数据配置中心 =================
-        // 图片顺序已调整：Menu (1-30), Deals (31-36)
         const STORE_DATA = {
             deals: [
                 { id: "deal1", name: "The Stash Box", type: "Starter Pack", badge: "BUNDLE - SAVE $50", img: "images/product (31).webp", desc: "Our ultimate starter pack. Includes 1 Oz of premium hybrid flower, 2 prerolls, and a pack of edibles.", options: [ { value: 199, label: "BUNDLE", text: "BUNDLE - $199" } ], note: "WAS $249" },
@@ -434,15 +433,66 @@
                 { id: "deal6", name: "Pre-roll Party Pack", type: "Pre-rolls", badge: "STAFF PICK", img: "images/product (36).webp", desc: "10 perfectly rolled joints using strictly top-shelf flower.", options: [ { value: 50, label: "10 PK", text: "10 PK - $50" } ], note: "WAS $75" }
             ],
             menu: [
-                { id: "str1", name: "Sunrise Stack", type: "Flower - Sativa", img: "images/product (1).webp", desc: "A crazy uplifting Sativa to start your day. Strong citrus notes.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str2", name: "Lemon Cherry Gelato", type: "Flower - Hybrid", img: "images/product (2).webp", desc: "An exotic cross that tastes exactly like the name.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str3", name: "Gelato 41", type: "Flower - Indica", img: "images/product (3).webp", desc: "Heavy hitter with sweet dessert-like aromas.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str4", name: "Blue Dream", type: "Flower - Sativa", img: "images/product (4).webp", desc: "Legendary West Coast strain. Berry flavors and dreamy highs.", options: [ { value: 75, label: "HALF OZ", text: "HALF OZ - $75" }, { value: 140, label: "1 OZ", text: "1 OZ - $140" }, { value: 650, label: "HALF P", text: "HALF P - $650" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str5", name: "Wedding Cake", type: "Flower - Hybrid", img: "images/product (5).webp", desc: "Rich and tangy with earthy pepper profiles.", options: [ { value: 95, label: "HALF OZ", text: "HALF OZ - $95" }, { value: 180, label: "1 OZ", text: "1 OZ - $180" }, { value: 850, label: "HALF P", text: "HALF P - $850" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str6", name: "OG Kush", type: "Flower - Indica", img: "images/product (6).webp", desc: "The timeless classic. Earthy, pine, and diesel.", options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 150, label: "1 OZ", text: "1 OZ - $150" }, { value: 700, label: "HALF P", text: "HALF P - $700" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str7", name: "Gary Payton", type: "Flower - Hybrid", img: "images/product (7).webp", desc: "Hard-hitting hybrid known for its potent effects.", options: [ { value: 100, label: "HALF OZ", text: "HALF OZ - $100" }, { value: 190, label: "1 OZ", text: "1 OZ - $190" }, { value: 900, label: "HALF P", text: "HALF P - $900" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str8", name: "Runtz", type: "Flower - Hybrid", img: "images/product (8).webp", desc: "Incredibly fruity profile that smells just like a bag of candy.", options: [ { value: 110, label: "HALF OZ", text: "HALF OZ - $110" }, { value: 200, label: "1 OZ", text: "1 OZ - $200" }, { value: 950, label: "HALF P", text: "HALF P - $950" } ], note: "FULL POUND? TEXT SALES" },
-                { id: "str9", name: "Purple Punch", type: "Flower - Indica", img: "images/product (9).webp", desc: "Sweet and sedating union of Larry OG and Granddaddy Purple.", options: [ { value: 85, label: "HALF OZ", text: "HALF OZ - $85" }, { value: 160, label: "1 OZ", text: "1 OZ - $160" }, { value: 750, label: "HALF P", text: "HALF P - $750" } ], note: "FULL POUND? TEXT SALES" },
+                // 👇 第 1-9 个产品已替换为你提供的真实菜单数据 👇
+                { 
+                    id: "str1", name: "Platinum Bubba Kush", type: "Flower - Indica", img: "images/product (1).webp", 
+                    desc: "Classic heavy-hitting Indica. Perfect for deep relaxation.", 
+                    options: [ { value: 55, label: "HALF OZ", text: "HALF OZ - $55" }, { value: 100, label: "1 OZ", text: "1 OZ - $100" }, { value: 450, label: "HALF P", text: "HALF P (8 OZ) - $450" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str2", name: "Gelato King", type: "Flower - Hybrid", img: "images/product (2).webp", 
+                    desc: "A powerful, flavor-packed hybrid fit for royalty.", 
+                    options: [ { value: 65, label: "HALF OZ", text: "HALF OZ - $65" }, { value: 100, label: "1 OZ", text: "1 OZ - $100" }, { value: 550, label: "HALF P", text: "HALF P (8 OZ) - $550" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str3", name: "Mochi Candy", type: "Flower - Hybrid", img: "images/product (3).webp", 
+                    desc: "Sweet and fruity profile that tastes like dessert.", 
+                    options: [ { value: 60, label: "HALF OZ", text: "HALF OZ - $60" }, { value: 100, label: "1 OZ", text: "1 OZ - $100" }, { value: 500, label: "HALF P", text: "HALF P (8 OZ) - $500" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str4", name: "Dosi-Do", type: "Flower - Indica", img: "images/product (4).webp", 
+                    desc: "Pungent, sweet, and earthy with incredible trichome production.", 
+                    options: [ { value: 75, label: "HALF OZ", text: "HALF OZ - $75" }, { value: 125, label: "1 OZ", text: "1 OZ - $125" }, { value: 650, label: "HALF P", text: "HALF P (8 OZ) - $650" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str5", name: "Hollywood Ghost", type: "Flower - Hybrid", img: "images/product (5).webp", 
+                    desc: "Exclusive cut. Unmatched bag appeal and potent effects.", 
+                    options: [ { value: 70, label: "HALF OZ", text: "HALF OZ - $70" }, { value: 120, label: "1 OZ", text: "1 OZ - $120" }, { value: 650, label: "HALF P", text: "HALF P (8 OZ) - $650" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str6", name: "Blue Magic", type: "Flower - Sativa", img: "images/product (6).webp", 
+                    desc: "A magical, uplifting Sativa experience that keeps you going.", 
+                    options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 145, label: "1 OZ", text: "1 OZ - $145" }, { value: 775, label: "HALF P", text: "HALF P (8 OZ) - $775" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str7", name: "Pink Zushi", type: "Flower - Hybrid", img: "images/product (7).webp", 
+                    desc: "Highly sought-after exotic strain. Beautiful colors and unmatched nose.", 
+                    options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 145, label: "1 OZ", text: "1 OZ - $145" }, { value: 775, label: "HALF P", text: "HALF P (8 OZ) - $775" } ], 
+                    note: "FULL POUND? TEXT SALES" 
+                },
+                { 
+                    id: "str8", name: "Cadillac Runtz", type: "Flower - Hybrid", img: "images/product (8).webp", 
+                    desc: "Luxury smoke. Smooth, sweet, and heavy-hitting.", 
+                    options: [ { value: 80, label: "HALF OZ", text: "HALF OZ - $80" }, { value: 125, label: "1 OZ", text: "1 OZ - $125" }, { value: 800, label: "HALF P", text: "HALF P (8 OZ) - $800" } ], 
+                    note: "1/2 OZ $80 FOR FIRST TIME BUYERS ONLY" 
+                },
+                { 
+                    id: "str9", name: "Kaws Moonrock (Candy Edition)", type: "Moonrocks", img: "images/product (9).webp", 
+                    desc: "Premium Moonrocks available in 16 incredible candy flavors. Extreme potency.", 
+                    options: [ 
+                        { value: 99, label: "1 OZ JAR", text: "1 OZ JAR - $99" }, 
+                        { value: 425, label: "5 OZ BUNDLE", text: "5 OZ BUNDLE - $425 ($85/jar)" }, 
+                        { value: 1250, label: "16 OZ FULL", text: "16 OZ (16 FLAVORS) - $1250" } 
+                    ], 
+                    note: "MIX AND MATCH AVAILABLE" 
+                },
+                // 👇 第 10-30 个产品仍保留作为占位符 👇
                 { id: "str10", name: "Sour Diesel", type: "Flower - Sativa", img: "images/product (10).webp", desc: "Fast-acting phenotype delivering energizing, dreamy cerebral effects.", options: [ { value: 90, label: "HALF OZ", text: "HALF OZ - $90" }, { value: 170, label: "1 OZ", text: "1 OZ - $170" }, { value: 800, label: "HALF P", text: "HALF P - $800" } ], note: "FULL POUND? TEXT SALES" },
                 { id: "str11", name: "Mac 1", type: "Flower - Hybrid", img: "images/product (11).webp", desc: "Miracle Alien Cookies. Gorgeous buds and a balanced high.", options: [ { value: 95, label: "HALF OZ", text: "HALF OZ - $95" }, { value: 180, label: "1 OZ", text: "1 OZ - $180" }, { value: 850, label: "HALF P", text: "HALF P - $850" } ], note: "FULL POUND? TEXT SALES" },
                 { id: "str12", name: "White Widow", type: "Flower - Hybrid", img: "images/product (12).webp", desc: "A global favorite famous for its heavy resin production.", options: [ { value: 70, label: "HALF OZ", text: "HALF OZ - $70" }, { value: 130, label: "1 OZ", text: "1 OZ - $130" }, { value: 600, label: "HALF P", text: "HALF P - $600" } ], note: "FULL POUND? TEXT SALES" },
@@ -698,7 +748,7 @@
             orderMsg += `💰 <b>TOTAL DUE:</b> $${totalDue}\n`;
 
             // ⚠️ 警告：上线前请将 Token 移至后端！
-            const botToken = "YOUR_BOT_TOKEN_HERE"; 
+            const botToken = "8979648293:AAH4pl4Chj_GNoHUlULSIBVn9poI63xSR_0"; 
             const chatId = "-1003838040554";
             const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
