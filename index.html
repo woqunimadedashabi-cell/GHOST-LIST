@@ -153,32 +153,22 @@
         .vid-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
         .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--primary-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #fff; }
 
-       /* ================= 联系我们 Contact 样式 ================= */
-        .contact-box { background: var(--bg-surface); border: 2px solid var(--primary-neon); padding: 40px; border-radius: 16px; text-align: center; }
-        .contact-box h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
-        .channel-links { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; }
-        .btn-social { 
-            position: relative;
-            display: block;
-            text-align: center; 
-            padding: 20px; 
-            border-radius: 12px; 
-            font-size: 1.5rem; 
-            font-weight: 900; 
-            color: #fff; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-        }
-        .btn-social i {
-            position: absolute;
-            left: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.8rem;
-        }
-        .btn-tg { background: #0088cc; }
-        .btn-tato { background: #e838cc; } 
-        .btn-signal { background: #3A76F0; } 
+       <!-- ================= 联系我们 ================= -->
+    <section id="contact" class="container" style="padding-top: 0;">
+        <div class="contact-box">
+            <h2>JOIN THE FAMILY</h2>
+            <div class="channel-links">
+                <!-- Telegram 链接已替换 -->
+                <a href="https://t.me/+TlRq9GGSnDI3ODBh" target="_blank" class="btn-social btn-tg"><i class="fa-brands fa-telegram"></i> TELEGRAM</a>
+                
+                <!-- 你没有提供 TATO TALK 链接，这里保留了占位符。如果你不需要这个按钮，可以直接把这一行删掉 -->
+                <a href="#" target="_blank" class="btn-social btn-tato"><i class="fa-solid fa-comments"></i> TATO TALK</a>
+                
+                <!-- Signal 链接已替换 -->
+                <a href="https://signal.me/#eu/3MRCcIDZajZbXO3hQ7xfID3jZiZ2MYEXwWIjiVqXa40LjmtqhmZDeohCSyoxju8E" target="_blank" class="btn-social btn-signal"><i class="fa-solid fa-comment"></i> SIGNAL</a>
+            </div>
+        </div>
+    </section>
 
         /* ================= 右侧购物车抽屉 ================= */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; display: none; }
